@@ -6,7 +6,7 @@ class Graph
 	public:
 		int Knoten;
 		int Kanten;
-		int Matrix2D[2][2] = { 0 };
+		int Matrix2D[10][10] = { 0 };
 
 	//Graph functions
 	public:
