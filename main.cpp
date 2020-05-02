@@ -7,35 +7,75 @@
 #include "Graph.h"
 
 
-//i don't like this but bear with me, its just for testing
-const int MAX_GRAPHEN_GROESSE = 20;
-const int MIN_GRAPHEN_GROESSE = 1;
-
-int KnotenEingabe = 2;
-int KantenEingabe = 2;
-Graph g;
-
-void matrixAdd(int matrix[2][2])
+int main()
 {
-	for (int i = 0; i < KnotenEingabe; i++)
+	/*
+	immer noch am testen mit matrizen, noch nichts fertig bis auf das auslesen der csv datei in eine 1d matrix
+	die konvertierung zu einer 2d matrix steht noch offen
+	aber wenn das mal geschafft ist, wird der rest einfach zu implementieren sein
+	*/
+	Graph G;
+
+	std::cout << "GraphY v1.0\n\n";
+	std::string CSVmatrix;
+	std::ifstream GraphFile("matrix.csv");
+	int MatrixSize = 0;
+	int row = 0;
+	int m_temp[100] = { 0 };
+
+	if (GraphFile.is_open())
 	{
-		for (int j = 0; j < KnotenEingabe; j++)
+		while (std::getline(GraphFile, CSVmatrix, ','))
 		{
-			g.Matrix2D[i][j] += matrix[i][j];
+			MatrixSize++;
+			std::cout << CSVmatrix << '\n';
+
+			//graph mit 5 fixem knotengrad
+			if (MatrixSize % 5 == 0)
+				row++;
+
+			for(int cols = 0; cols < 5; cols++)
+				G.Matrix[row][cols] = std::stoi(CSVmatrix);
+		}
+		GraphFile.close();
+	}
+	else
+	{
+		std::cout << "Error: Unable to open Graph file";
+	}
+
+
+
+	printf("\n\n\nPrinting Matrix:\n");
+	for (int i = 0; i < 5; i++)
+		for (int j = 0; j < 5; j++)
+			printf("Matrix[%d][%d]: %d\n", i, j, G.Matrix[i][j]);
+
+
+	//Input a Matrix with fixed size;
+	int matrix[100][100];
+	for (int i = 0; i < 5; i++)
+		for (int j = 0; j < 5; j++)
+			std::cin >> matrix[i][j];
+
+
+	
+	for (int i = 0; i < 5; i++)
+	{
+		for (int j = 0; j < 5; j++)
+		{
+			std::cout << "Matrix: ";
+			std::cout << matrix[i][j] << std::endl;
 		}
 	}
-}
-
-void matrixMultiply(int matrix[2][2])
-{
-	for (int i = 0; i < KnotenEingabe; i++)
+	int m1[5][5] =
 	{
-		for (int j = 0; j < KnotenEingabe; j++)
-		{
-			g.Matrix2D[i][j] *= matrix[i][j];
-		}
-	}
-}
+		0, 1, 1, 1, 0,
+		1, 0, 0, 1, 1,
+		1, 0, 0, 1, 0,
+		1, 1, 1, 0, 0,
+		0, 1, 0, 0, 0
+	};
 
 	int m2[5][5] =
 	{

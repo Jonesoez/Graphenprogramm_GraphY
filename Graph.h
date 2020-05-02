@@ -6,7 +6,7 @@ class Graph
 	public:
 		int Knoten;
 		int Kanten;
-		int Matrix2D[2][2] = { 0 };
+		int Matrix[10][10]; //10x10 should be enough
 
 	//Graph functions
 	public:
