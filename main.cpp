@@ -30,7 +30,8 @@ int main()
 			MatrixSize++;
 			std::cout << CSVmatrix << '\n';
 
-			//graph mit 5 fixem knotengrad
+			//konvertierung der 1d matrix in eine 2d matrix
+			//immer noch am testen
 			if (MatrixSize % 5 == 0)
 				row++;
 
@@ -51,7 +52,7 @@ int main()
 			printf("Matrix[%d][%d]: %d\n", i, j, G.Matrix[i][j]);
 
 
-	//Input a Matrix with fixed size;
+	//spielraum fuer mich mit matrizen in int arrays
 	int matrix[100][100];
 	for (int i = 0; i < 5; i++)
 		for (int j = 0; j < 5; j++)
