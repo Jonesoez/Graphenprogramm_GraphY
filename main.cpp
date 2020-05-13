@@ -68,24 +68,7 @@ int main()
 
 	printf("\n\n");
 
-	/*
-	int m1[15][15] =
-	{
-		1,2,3,4,5,
-		6,7,8,9,10,
-		11,12,13,14,15,
-		16,17,18,19,20,
-		21,22,23,24,25
-	};
 
-	
-	G.matrixAdd(m1);
-
-	printf("\n\n\nPrinting ADDED static Array Matrix:\n");
-	for (int i = 0; i < G.getGraphDimension(); i++)
-		for (int j = 0; j < G.getGraphDimension(); j++)
-			printf("2D Converted Matrix[%d][%d]: %d\n", i, j, G.Matrix[i][j]);
-	*/
 
 	G.creatDistanzMatrix();
 	printf("\n\n\nDISTANZMATRIX:\n");
@@ -102,14 +85,27 @@ int main()
 	for(int i = 0; i < G.getGraphDimension(); i++)
 		std::cout << G.Exzentrizitaeten[i] << std::endl;
 
+
 	G.calcDurchmesser();
-	std::cout << "Durchmesser: \n";
+	std::cout << "Durchmesser: ";
 	std::cout << G.Durchmesser << std::endl;
 
 	G.calcRadius();
-	std::cout << "Radius: \n";
+	std::cout << "Radius: ";
 	std::cout << G.Radius << std::endl;
 
+	G.calcZentren();
+	std::cout << "Zentren: ";
+	std::cout << "An den Knoten: [ ";
+	for (int i = 0; i < G.getGraphDimension(); i++)
+	{
+		if (G.Zentren[i] != 0)
+			std::cout << i + 1 << " ";
+	}
+	std::cout << "]";
+
+
+	std::cout << "\n\n\n\n\n" << std::endl;
 	system("pause");
 	return 0;
 }

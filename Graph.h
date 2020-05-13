@@ -5,15 +5,16 @@ class Graph
 {
 	//Graph
 	public:
-		int MatrixSize;
 		int Knoten;
 		//int Kanten;
 		int Matrix[15][15]; //15x15 sollte fuer den anfang reichen, wird vielleicht noch zu einem dynamischen array geaendert
+		int MatrixSize;
 		int DistanzMatrix[15][15];
 		
 		//Eigenschaften
 		int Exzentrizitaeten[15];
-		int Durchmesser, Radius, Zentrum;
+		int Durchmesser, Radius;
+		int Zentren[15];
 		std::vector<std::vector<int>> matrixv;
 
 
@@ -23,7 +24,7 @@ class Graph
 		void calcExzentrizitaet(); //noch nicht fertig
 		void calcDurchmesser();
 		void calcRadius();
-		void calcZentrum();
+		void calcZentren();
 
 		void matrixAdd(int matrix_t[15][15]);
 		void matrixMultiply(int matrix[15][15]);

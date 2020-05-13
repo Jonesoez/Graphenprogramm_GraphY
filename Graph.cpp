@@ -13,7 +13,7 @@ void Graph::creatDistanzMatrix()
 			if (i == j)
 				DistanzMatrix[i][j] = 0;
 			else if (Matrix[i][j] == 0)
-				DistanzMatrix[i][j] = infinity; //eigentlich unendlich, aber da wir unendlich nicht als zahl darstellen koennen, nehmen wir einfach die max int laenge zur veranschaulichung
+				DistanzMatrix[i][j] = infinity; //eigentlich unendlich, INT_MAX wird zur veranschaulichung genommen
 				
 		}
 	}
@@ -71,4 +71,16 @@ void Graph::calcRadius()
 		}
 	}
 	Radius = delta;
+}
+
+void Graph::calcZentren()
+{
+	int counter = 0;
+	for (int i = 0; i < Knoten; i++)
+	{
+		if (Exzentrizitaeten[i] == Radius)
+		{
+			Zentren[i] = Exzentrizitaeten[i];
+		}
+	}
 }
