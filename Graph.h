@@ -1,16 +1,33 @@
 #pragma once
+#include <vector>
 
 class Graph
 {
 	//Graph
 	public:
+		int MatrixSize;
 		int Knoten;
-		int Kanten;
-		int Matrix[10][10]; //10x10 sollte fuer den anfang reichen, wird vielleicht noch zu einem dynamischen array geaendert
+		//int Kanten;
+		int Matrix[15][15]; //15x15 sollte fuer den anfang reichen, wird vielleicht noch zu einem dynamischen array geaendert
+		int DistanzMatrix[15][15];
+		
+		//Eigenschaften
+		int Exzentrizitaeten[15];
+		int Durchmesser, Radius, Zentrum;
+		std::vector<std::vector<int>> matrixv;
+
 
 	//Graph Funktionen
 	public:
-		void drawGraph(int AnzahlKnoten, int AnzahlKanten);
-		void matrixAdd(int matrix[2][2]);
-		void matrixMultiply(int matrix[2][2]);
+		void creatDistanzMatrix();
+		void calcExzentrizitaet(); //noch nicht fertig
+		void calcDurchmesser();
+		void calcRadius();
+		void calcZentrum();
+
+		void matrixAdd(int matrix_t[15][15]);
+		void matrixMultiply(int matrix[15][15]);
+		int	getGraphDimension() { return sqrt(MatrixSize); };	//Durch die Wurzel der Länge der Adjazenzmatrix in der CSV Datei erhält man die Zeilen und Spalten für den 2D Array.
+
 };
+

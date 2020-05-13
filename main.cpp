@@ -2,16 +2,13 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include <vector>
+#include <iomanip>
 #include <string>
 #include "Graph.h"
 
-//Durch die Wurzel der Länge der Adjazenzmatrix in der CSV Datei erhält man die Zeilen und Spalten für den 2D Array.
-//Ein Check ob es tatsächlich um eine Adjazenzmatrix handelt kann mit einer simplen Überprüfung gemacht werden.
-int getGraphDimension(int length)
-{
-	return sqrt(length);
-}
+Graph G;
+
+
 
 int main()
 {
@@ -23,12 +20,12 @@ int main()
 	+ Artikulationen, Brücken - No
 	+ Komponenten - No
 	*/
-	Graph G;
+	
 
 	std::cout << "GraphY v1.1\n\n";
 	std::string CSVmatrix;
 	std::ifstream GraphFile("matrix.csv");
-	int MatrixSize = 0;
+	
 	int m_temp[100] = { 0 };
 
 
@@ -37,21 +34,20 @@ int main()
 		std::cout << "\32Reading adjacency matrix from csv file...\n\n";
 		while (std::getline(GraphFile, CSVmatrix, ','))
 		{
-			m_temp[MatrixSize] = std::stoi(CSVmatrix);
-			MatrixSize++;
-			std::cout << CSVmatrix << '\n';
+			m_temp[G.MatrixSize] = std::stoi(CSVmatrix);
+			G.MatrixSize++;
+			//std::cout << CSVmatrix << '\n';
 		}
 
 		//1D Matrix(Array) zu 2D Matrix(Array)
 		int m_data = 0;
-		for (int i = 0; i < getGraphDimension(MatrixSize); i++)
+		for (int i = 0; i < G.getGraphDimension(); i++)
 		{
-			for (int j = 0; j < getGraphDimension(MatrixSize); j++)
+			for (int j = 0; j < G.getGraphDimension(); j++)
 			{
 				G.Matrix[i][j] = m_temp[m_data++];
 			}
 		}
-
 		GraphFile.close();
 	}
 	else
@@ -60,44 +56,59 @@ int main()
 	}
 
 	//Print Knoten
-	printf("Knoten der Adjazenzmatrix: %d\n", getGraphDimension(MatrixSize));
+	printf("Knoten der Adjazenzmatrix: %d\n", G.getGraphDimension());
+	G.Knoten = G.getGraphDimension();
 
-
-	//Print 1D Temp Matrix
-	for (int i = 0; i < MatrixSize; i++)
-		printf("1D Temp Matrix[%d]: %d\n", i, m_temp[i]);
 
 	//Print 2D Converted Matrix
-	printf("\n\n\nPrinting Matrix:\n");
-	for (int i = 0; i < getGraphDimension(MatrixSize); i++)
-		for (int j = 0; j < getGraphDimension(MatrixSize); j++)
+	printf("\n\n\nPrinting static Array Matrix:\n");
+	for (int i = 0; i < G.getGraphDimension(); i++)
+		for (int j = 0; j < G.getGraphDimension(); j++)
+			std::cout << G.Matrix[i][j] << std::setw(5);
+
+	printf("\n\n");
+
+	/*
+	int m1[15][15] =
+	{
+		1,2,3,4,5,
+		6,7,8,9,10,
+		11,12,13,14,15,
+		16,17,18,19,20,
+		21,22,23,24,25
+	};
+
+	
+	G.matrixAdd(m1);
+
+	printf("\n\n\nPrinting ADDED static Array Matrix:\n");
+	for (int i = 0; i < G.getGraphDimension(); i++)
+		for (int j = 0; j < G.getGraphDimension(); j++)
 			printf("2D Converted Matrix[%d][%d]: %d\n", i, j, G.Matrix[i][j]);
+	*/
 
+	G.creatDistanzMatrix();
+	printf("\n\n\nDISTANZMATRIX:\n");
+	for (int i = 0; i < G.getGraphDimension(); i++)
+		for (int j = 0; j < G.getGraphDimension(); j++)
+			std::cout << G.DistanzMatrix[i][j] << std::setw(5);
 
-	//Spielraum für mich
-	int matrix[100][100];
-	for (int i = 0; i < 5; i++)
-		for (int j = 0; j < 5; j++)
-			std::cin >> matrix[i][j];
+	
 
+	printf("\n\n");
 
-	int m1[5][5] =
-	{
-		0, 1, 1, 1, 0,
-		1, 0, 0, 1, 1,
-		1, 0, 0, 1, 0,
-		1, 1, 1, 0, 0,
-		0, 1, 0, 0, 0
-	};
+	G.calcExzentrizitaet();
+	std::cout << "Exzentrizitaeten: \n";
+	for(int i = 0; i < G.getGraphDimension(); i++)
+		std::cout << G.Exzentrizitaeten[i] << std::endl;
 
-	int m2[5][5] =
-	{
-		0, 1, 1, 1, 0,
-		1, 0, 0, 1, 1,
-		1, 0, 0, 1, 0,
-		1, 1, 1, 0, 0,
-		0, 1, 0, 0, 0
-	};
+	G.calcDurchmesser();
+	std::cout << "Durchmesser: \n";
+	std::cout << G.Durchmesser << std::endl;
+
+	G.calcRadius();
+	std::cout << "Radius: \n";
+	std::cout << G.Radius << std::endl;
 
 	system("pause");
 	return 0;
