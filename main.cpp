@@ -12,16 +12,6 @@ Graph G;
 
 int main()
 {
-	/*
-	+ Auslesen der CSV Datei - Yes
-	+ 1D Matrix (ausgelesene CSV) zu 2D Matrix - Yes
-	+ Bestimmung der Distanzen und Exzentrizitäten aller Knoten - No
-	+ Radius, Durchmesser, Zentrum - No
-	+ Artikulationen, Brücken - No
-	+ Komponenten - No
-	*/
-	
-
 	std::cout << "GraphY v1.1\n\n";
 	std::string CSVmatrix;
 	std::ifstream GraphFile("matrix.csv");
