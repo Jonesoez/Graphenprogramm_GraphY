@@ -12,7 +12,7 @@ class Graph
 		int DistanzMatrix[15][15];
 		int DistanzMatrix2[15][15];
 
-		int potenztestmatrix[15][15];
+		int PotenzMatrix[15][15];
 		
 		//Eigenschaften
 		int Exzentrizitaeten[15];
@@ -24,15 +24,13 @@ class Graph
 	//Graph Funktionen
 	public:
 		void creatDistanzMatrix();
-		void creatDistanzMatrix2();
 		void calcExzentrizitaet(); //noch nicht fertig
 		void calcDurchmesser();
 		void calcRadius();
 		void calcZentren();
 
 		void matrixPower(int in_matrix[15][15], int out_matrix[15][15], int n);
-		void matrixAdd(int matrix_t[15][15]);
-		void matrixMultiply(int matrix[15][15]);
+		void matrixAdd(int add_matrix[15][15], int out_matrix[15][15]);
 		int	getGraphDimension() { return (int)sqrt(MatrixSize); };	//Durch die Wurzel der Länge der Adjazenzmatrix in der CSV Datei erhält man die Zeilen und Spalten für den 2D Array.
 
 };
