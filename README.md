@@ -8,5 +8,7 @@ HTL Spengergasse Graphenprogramm für POS WIP
 - [ ] Artikulationen, Brücken
 - [ ] Komponenten
 
+---
+
 **Anmerkung zum auslesen der CSV:** Man hätte eigentlich auch Zeilenweise die Adjazenzmatrix einlesen können. Ich mache es nur komplizierter.
 
