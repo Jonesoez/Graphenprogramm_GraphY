@@ -18,7 +18,7 @@ int main()
 
 	if (GraphFile.is_open())
 	{
-		std::cout << "\32Reading adjacency matrix from csv file...\n\n";
+		std::cout << "Reading adjacency matrix from csv file...\n\n";
 		while (std::getline(GraphFile, CSVmatrix, ','))
 		{
 			m_temp[G.MatrixSize] = std::stoi(CSVmatrix);
@@ -83,9 +83,15 @@ int main()
 		}
 		std::cout << "]";
 
-
-		std::cout << "\n\n" << std::endl;
-
+		
+		std::cout << "\n";
+		G.createWegMatrix();
+		std::cout << "WegMatrix: \n\n";
+		for (int i = 0; i < G.getGraphDimension(); i++)
+			for (int j = 0; j < G.getGraphDimension(); j++)
+				std::cout << G.WegMatrix[i][j] << std::setw(5);
+		
+		std::cout << "\n\n";
 
 		GraphFile.close();
 	}

@@ -15,7 +15,38 @@ void Graph::creatDistanzMatrix()
 				DistanzMatrix[i][j] = infinity; //eigentlich unendlich, INT_MAX wird zur veranschaulichung genommen	
 		}
 
+	int temp_matrix[15][15];
+	int potenzierte_matrix[15][15];
+
+	for (int i = 0; i < Knoten; i++)
+		for (int j = 0; j < Knoten; j++)
+			temp_matrix[i][j] = Matrix[i][j];
+
+
+	for (int k = 1; k < Knoten; k++)
+	{
+		matrixPower(temp_matrix, potenzierte_matrix, k);
+		for (int i = 0; i < Knoten; i++)
+			for (int j = 0; j < Knoten; j++)
+				if (potenzierte_matrix[i][j] != 0 && DistanzMatrix[i][j] == infinity)
+					DistanzMatrix[i][j] = k;
+	}
+}
+
+
+void Graph::createWegMatrix()
+{
+	//init wegmatrix
+	for (int i = 0; i < Knoten; i++)
+		for (int j = 0; j < Knoten; j++)
+		{
+			WegMatrix[i][j] = Matrix[i][j];;
+			if (i == j)
+				WegMatrix[i][j] = 1;
+		}
+
 	int potenz_temp_matrix[15][15];
+	int potenzierte_matrix[15][15];
 
 	for (int i = 0; i < Knoten; i++)
 		for (int j = 0; j < Knoten; j++)
@@ -24,13 +55,14 @@ void Graph::creatDistanzMatrix()
 
 	for (int k = 1; k < Knoten; k++)
 	{
-		matrixPower(potenz_temp_matrix, PotenzMatrix, k);
+		matrixPower(potenz_temp_matrix, potenzierte_matrix, k);
 		for (int i = 0; i < Knoten; i++)
 			for (int j = 0; j < Knoten; j++)
-				if (PotenzMatrix[i][j] != 0 && DistanzMatrix[i][j] == infinity)
-					DistanzMatrix[i][j] = k;
+				if (potenzierte_matrix[i][j] != 0)
+					WegMatrix[i][j] = 1;
 	}
 }
+
 
 //potenziere matrix mit parameter n als exponent
 void Graph::matrixPower(int in_matrix[15][15], int out_matrix[15][15], int n)
