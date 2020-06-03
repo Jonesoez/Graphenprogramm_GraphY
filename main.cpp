@@ -84,8 +84,16 @@ int main()
 		std::cout << "]";
 
 
-		std::cout << "\n\n\n\n\n" << std::endl;
+		std::cout << "\n\n\n Distanzmatrix2:" << std::endl;
 
+		G.creatDistanzMatrix2();
+
+		for (int i = 0; i < G.getGraphDimension(); i++)
+			for (int j = 0; j < G.getGraphDimension(); j++)
+				std::cout << G.DistanzMatrix2[i][j] << std::setw(5);
+
+
+		std::cout << "\n\n" << std::endl;
 
 		GraphFile.close();
 	}
