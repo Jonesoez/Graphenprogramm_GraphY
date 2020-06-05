@@ -3,7 +3,7 @@
 #include <fstream>
 #include <sstream>
 #include <iomanip>
-#include <string>
+
 #include "Graph.h"
 
 Graph G;
@@ -22,6 +22,7 @@ int main()
 		while (std::getline(GraphFile, CSVmatrix, ','))
 		{
 			m_temp[G.MatrixSize] = std::stoi(CSVmatrix);
+			G.MatrixInLines[G.MatrixSize] = std::stoi(CSVmatrix);
 			G.MatrixSize++;
 			//std::cout << CSVmatrix << '\n';
 		}
@@ -92,6 +93,26 @@ int main()
 				std::cout << G.WegMatrix[i][j] << std::setw(5);
 		
 		std::cout << "\n\n";
+
+		G.calcKomponenten();
+		std::cout << "Komponenten: ";
+		std::cout << G.Komponenten << std::endl;
+
+		/* Fuer Testzwecke
+		std::cout << "\n\n\Komponenten Zeilen: \n";
+		for (int i = 0; i < G.getGraphDimension(); i++)
+			std::cout << G.KomponentenZeilen[i] << std::endl;
+
+		
+		std::cout << "\n\n\n\n\n";
+
+		std::cout << "\nAll KomponentenSet elements: ";
+		std::unordered_set<std::string> ::iterator itr;
+		for (itr = G.KomponentenSet.begin(); itr != G.KomponentenSet.end(); itr++)
+			std::cout << (*itr) << std::endl;
+		*/
+
+		std::cout << "\n\n\n\n\n";
 
 		GraphFile.close();
 	}

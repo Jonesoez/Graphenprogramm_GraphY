@@ -89,6 +89,44 @@ void Graph::matrixPower(int in_matrix[15][15], int out_matrix[15][15], int n)
 	}
 }
 
+//idee: speichere die wegmatrix in einem string array welches mit der wegmatrix befüllt wird
+void Graph::calcKomponenten()
+{
+	//not working right now
+
+	int temp_matrix[100];
+
+
+	//speichere 2d array wegmatrix in einem 1d array
+	int m_data = 0;
+	for (int i = 0; i < Knoten; i++)
+		for (int j = 0; j < Knoten; j++)
+			temp_matrix[m_data++] = WegMatrix[i][j];
+
+	int zeile = 0;
+	int counter = 0;
+	std::string KompZeilen[100];
+
+
+	for (int i = 0; i < MatrixSize; i++)
+	{
+		KomponentenZeilen[zeile].append(std::to_string(temp_matrix[i]));
+		counter++;
+
+		//da die matrix immer quadratisch ist können wir einfach per 
+		if (counter % Knoten == 0)
+			zeile++;
+	}
+
+	//unordered_set speichert nur einziartiges zeug
+	for (int i = 0; i < Knoten; i++)
+	{
+		KomponentenSet.emplace(KomponentenZeilen[i]);
+	}
+
+	Komponenten = KomponentenSet.size();
+}
+
 void Graph::matrixAdd(int add_matrix[15][15], int out_matrix[15][15])
 {
 	for (int i = 0; i < Knoten; i++)
