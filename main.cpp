@@ -12,8 +12,14 @@ int main()
 {
 	std::cout << "GraphY v1.2\n\n";
 	std::string CSVmatrix;
-	std::ifstream GraphFile("matrix.csv");
+	std::string filename;
 	
+
+	std::cout << "Please choose your .csv file: ";
+	std::getline(std::cin, filename);
+
+	std::ifstream GraphFile(filename);
+
 	int m_temp[100] = { 0 };
 
 	if (GraphFile.is_open())
