@@ -6,7 +6,7 @@ HTL Spengergasse Graphenprogramm für POS WIP
 - [x] Bestimmung der Distanzen und Exzentrizitäten aller Knoten
 - [x] Radius, Durchmesser, Zentrum
 - [ ] Artikulationen, Brücken
-- [x] Komponenten
+- [x] Komponenten *(Anzahl)*
 
 ---
 
