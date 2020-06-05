@@ -89,10 +89,9 @@ void Graph::matrixPower(int in_matrix[15][15], int out_matrix[15][15], int n)
 	}
 }
 
-//idee: speichere die wegmatrix in einem string array welches mit der wegmatrix befüllt wird
 void Graph::calcKomponenten()
 {
-	//not working right now
+	//working right now
 
 	int temp_matrix[100];
 
@@ -113,7 +112,6 @@ void Graph::calcKomponenten()
 		KomponentenZeilen[zeile].append(std::to_string(temp_matrix[i]));
 		counter++;
 
-		//da die matrix immer quadratisch ist können wir einfach per 
 		if (counter % Knoten == 0)
 			zeile++;
 	}
