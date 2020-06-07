@@ -8,6 +8,7 @@
 
 Graph G;
 
+
 int main()
 {
 	std::cout << "GraphY v1.2\n\n";
@@ -19,6 +20,7 @@ int main()
 	std::getline(std::cin, filename);
 
 	std::ifstream GraphFile(filename);
+	std::ofstream OutputFile("graph_berechnet.txt");
 
 	int m_temp[100] = { 0 };
 
@@ -46,13 +48,23 @@ int main()
 		//Print Knoten
 		printf("Knoten der Adjazenzmatrix: %d\n", G.getGraphDimension());
 		G.Knoten = G.getGraphDimension();
+		OutputFile << "Knoten: " << G.Knoten << std::endl;
 
 
 		//Print 2D Converted Matrix
 		printf("\n\n\nPrinting static Array Matrix:\n");
+		OutputFile << "Adjazenzmatrix: \n{\n";
 		for (int i = 0; i < G.getGraphDimension(); i++)
+		{
 			for (int j = 0; j < G.getGraphDimension(); j++)
+			{
 				std::cout << G.Matrix[i][j] << std::setw(5);
+				OutputFile << G.Matrix[i][j] << " ";
+			}
+			OutputFile << std::endl;
+		}
+		OutputFile << "}";
+				
 
 		printf("\n\n");
 
@@ -61,7 +73,10 @@ int main()
 		printf("\n\n\nDISTANZMATRIX:\n");
 		for (int i = 0; i < G.getGraphDimension(); i++)
 			for (int j = 0; j < G.getGraphDimension(); j++)
+			{
 				std::cout << G.DistanzMatrix[i][j] << std::setw(5);
+			}
+				
 
 
 		printf("\n\n");
@@ -104,22 +119,20 @@ int main()
 		std::cout << "Komponenten: ";
 		std::cout << G.Komponenten << std::endl;
 
-		/* Fuer Testzwecke
+
+		
+		/* 
 		std::cout << "\n\n\Komponenten Zeilen: \n";
 		for (int i = 0; i < G.getGraphDimension(); i++)
 			std::cout << G.KomponentenZeilen[i] << std::endl;
 
+		*/
+
 		
 		std::cout << "\n\n\n\n\n";
 
-		std::cout << "\nAll KomponentenSet elements: ";
-		std::unordered_set<std::string> ::iterator itr;
-		for (itr = G.KomponentenSet.begin(); itr != G.KomponentenSet.end(); itr++)
-			std::cout << (*itr) << std::endl;
-		*/
 
-		std::cout << "\n\n\n\n\n";
-
+		OutputFile.close();
 		GraphFile.close();
 	}
 	else

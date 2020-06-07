@@ -103,16 +103,16 @@ void Graph::calcKomponenten()
 			temp_matrix[m_data++] = WegMatrix[i][j];
 
 	int zeile = 0;
-	int counter = 0;
-	std::string KompZeilen[100];
+	int spalte = 0;
 
 
 	for (int i = 0; i < MatrixSize; i++)
 	{
 		KomponentenZeilen[zeile].append(std::to_string(temp_matrix[i]));
-		counter++;
+		spalte++;
 
-		if (counter % Knoten == 0)
+		//big brain
+		if (spalte % Knoten == 0)
 			zeile++;
 	}
 
