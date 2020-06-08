@@ -6,21 +6,23 @@
 
 #include "Graph.h"
 
-Graph G;
 
+//unicode character fuer unendlich ist \u221E
+
+Graph G;
 
 int main()
 {
 	std::cout << "GraphY v1.2\n\n";
 	std::string CSVmatrix;
 	std::string filename;
-	
+	std::string outputfilename = "graph_berechnet.txt";
 
 	std::cout << "Please choose your .csv file: ";
 	std::getline(std::cin, filename);
 
 	std::ifstream GraphFile(filename);
-	std::ofstream OutputFile("graph_berechnet.txt");
+	std::ofstream OutputFile(outputfilename);
 
 	int m_temp[100] = { 0 };
 
@@ -52,73 +54,139 @@ int main()
 
 
 		//Print 2D Converted Matrix
-		printf("\n\n\nPrinting static Array Matrix:\n");
-		OutputFile << "Adjazenzmatrix: \n{\n";
+		printf("\n\n\nAdjazenzmatrix:\n");
+		OutputFile << "\nAdjazenzmatrix: \n";
 		for (int i = 0; i < G.getGraphDimension(); i++)
 		{
 			for (int j = 0; j < G.getGraphDimension(); j++)
 			{
 				std::cout << G.Matrix[i][j] << std::setw(5);
-				OutputFile << G.Matrix[i][j] << " ";
+				OutputFile << G.Matrix[i][j] << "\t";
 			}
 			OutputFile << std::endl;
 		}
-		OutputFile << "}";
+		OutputFile << std::endl;
 				
 
 		printf("\n\n");
 
 
 		G.creatDistanzMatrix();
-		printf("\n\n\nDISTANZMATRIX:\n");
+		printf("\n\n\nDistanzmatrix:\n");
+		OutputFile << "Distanzmatrix: \n";
 		for (int i = 0; i < G.getGraphDimension(); i++)
+		{
 			for (int j = 0; j < G.getGraphDimension(); j++)
 			{
-				std::cout << G.DistanzMatrix[i][j] << std::setw(5);
+				if (G.checkInfinity(G.DistanzMatrix[i][j]))
+				{
+					OutputFile << "~" << "\t";
+					std::cout << "~" << std::setw(5);
+				}
+				else
+				{
+					std::cout << G.DistanzMatrix[i][j] << std::setw(5);
+					OutputFile << G.DistanzMatrix[i][j] << "\t";
+				}
+					
 			}
+			OutputFile << std::endl;
+		}
+		OutputFile << std::endl;
+	
 				
 
 
 		printf("\n\n");
 
 		G.calcExzentrizitaet();
-		std::cout << "Exzentrizitaeten: \n";
+		std::cout << "Exzentrizitäten: \n";
+		OutputFile << "Exzentrizitäten: [ ";
 		for (int i = 0; i < G.getGraphDimension(); i++)
-			std::cout << G.Exzentrizitaeten[i] << std::endl;
+		{
+			if (G.checkInfinity(G.Exzentrizitaeten[i]))
+			{
+				OutputFile << "~ ";
+				std::cout << "~ " << std::endl;
+			}
+			else
+			{
+				std::cout << G.Exzentrizitaeten[i] << std::endl;
+				OutputFile << G.Exzentrizitaeten[i] << " ";
+			}
+		}
+		OutputFile << "]" << std::endl;
 
 
 		G.calcDurchmesser();
-		std::cout << "Durchmesser: ";
-		std::cout << G.Durchmesser << std::endl;
+		if (G.checkInfinity(G.Durchmesser))
+		{
+			OutputFile << "Durchmesser: kein Durchmesser" << std::endl;
+			std::cout << "Durchmesser: kein Durchmesser" << std::endl;
+		}
+		else
+		{
+			std::cout << "Durchmesser: " << G.Durchmesser << std::endl;
+			OutputFile << "Durchmesser: " << G.Durchmesser << std::endl;
+		}
 
 		G.calcRadius();
-		std::cout << "Radius: ";
-		std::cout << G.Radius << std::endl;
+		if (G.checkInfinity(G.Radius))
+		{
+			OutputFile << "Radius: kein Radius" << std::endl;
+			std::cout << "Radius: kein Radius" << std::endl;
+		}
+		else
+		{
+			std::cout << "Radius: " << G.Radius << std::endl;
+			OutputFile << "Radius: " << G.Radius << std::endl;
+		}
+
+
 
 		G.calcZentren();
-		std::cout << "Zentren: ";
-		std::cout << "An den Knoten: [ ";
+		std::cout << "Zentren: An den Knoten: [ ";
+		OutputFile << "Zentren: An den Knoten: [ ";
 		for (int i = 0; i < G.getGraphDimension(); i++)
 		{
-			if (G.Zentren[i] != 0)
+			//alle knoten zum zentrum werden
+			if (G.checkInfinity(G.Zentren[i]))
+			{
+				std::cout << "kein Zentrum ";
+				OutputFile << "kein Zentrum ";
+				break;
+			}
+			else if (G.Zentren[i] != 0)
+			{
 				std::cout << i + 1 << " ";
+				OutputFile << i + 1 << " ";
+			}
 		}
 		std::cout << "]";
+		OutputFile << "]" << std::endl;
 
 		
 		std::cout << "\n";
 		G.createWegMatrix();
 		std::cout << "WegMatrix: \n\n";
+		OutputFile << "\nWegmatrix: \n";
 		for (int i = 0; i < G.getGraphDimension(); i++)
+		{
 			for (int j = 0; j < G.getGraphDimension(); j++)
+			{
 				std::cout << G.WegMatrix[i][j] << std::setw(5);
+				OutputFile << G.WegMatrix[i][j] << "\t";
+			}
+			OutputFile << std::endl;
+		}
+		OutputFile << std::endl;
 		
 		std::cout << "\n\n";
 
 		G.calcKomponenten();
 		std::cout << "Komponenten: ";
 		std::cout << G.Komponenten << std::endl;
-
+		OutputFile << "Komponenten: " << G.Komponenten << std::endl;
 
 		
 		/* 
@@ -128,7 +196,7 @@ int main()
 
 		*/
 
-		
+		std::cout << "\n\nOutput file saved as " << outputfilename << std::endl;
 		std::cout << "\n\n\n\n\n";
 
 

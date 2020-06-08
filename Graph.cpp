@@ -182,3 +182,11 @@ void Graph::calcZentren()
 		}
 	}
 }
+
+bool Graph::checkInfinity(int value)
+{
+	if (value == INT_MAX)
+		return true;
+	else
+		return false;
+}

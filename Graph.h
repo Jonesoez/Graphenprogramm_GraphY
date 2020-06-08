@@ -37,6 +37,7 @@ class Graph
 		void calcRadius();
 		void calcZentren();
 
+		bool checkInfinity(int value);
 		void matrixPower(int in_matrix[15][15], int out_matrix[15][15], int n);
 		void matrixAdd(int add_matrix[15][15], int out_matrix[15][15]);
 		int	getGraphDimension() { return (int)sqrt(MatrixSize); };	//Durch die Wurzel der Länge der Adjazenzmatrix in der CSV Datei erhält man die Zeilen und Spalten für den 2D Array.
