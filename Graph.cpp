@@ -109,6 +109,7 @@ void Graph::calcKomponenten()
 	for (int i = 0; i < MatrixSize; i++)
 	{
 		KomponentenZeilen[zeile].append(std::to_string(temp_matrix[i]));
+		Komponenten[zeile].push_back(temp_matrix[i]);
 		spalte++;
 
 		//big brain
@@ -120,9 +121,11 @@ void Graph::calcKomponenten()
 	for (int i = 0; i < Knoten; i++)
 	{
 		KomponentenSet.emplace(KomponentenZeilen[i]);
+		KompSetInt.emplace(std::stoi(KomponentenZeilen[i]));
 	}
 
-	Komponenten = KomponentenSet.size();
+	KomponentenAnzahl = KomponentenSet.size();
+	KompSetIntAnzahl = KompSetInt.size();
 }
 
 void Graph::matrixAdd(int add_matrix[15][15], int out_matrix[15][15])

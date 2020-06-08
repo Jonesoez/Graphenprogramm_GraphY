@@ -21,10 +21,15 @@ class Graph
 		int Durchmesser, Radius;
 		int Zentren[100];
 
-		int Komponenten;
+		int KomponentenAnzahl;
 		std::string KomponentenZeilen[100];
 		std::unordered_set<std::string> KomponentenSet;
 		std::vector<std::vector<int>> matrixv;
+
+		//vectorsssss for tests
+		std::vector<int> Komponenten[100];
+		std::unordered_set<int> KompSetInt;
+		int KompSetIntAnzahl;
 
 
 	//Graph Funktionen
