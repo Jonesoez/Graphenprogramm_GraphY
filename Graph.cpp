@@ -34,14 +34,14 @@ void Graph::creatDistanzMatrix()
 }
 
 
-void Graph::createWegMatrix(int out_matrix[15][15])
+void Graph::createWegMatrix(int in_matrix[15][15], int out_matrix[15][15])
 {
 	//init wegmatrix
 	for (int i = 0; i < Knoten; i++)
 		for (int j = 0; j < Knoten; j++)
 		{
 			if (i == j)
-				out_matrix[i][j] = 1;
+				in_matrix[i][j] = 1;
 		}
 
 	int potenz_temp_matrix[15][15];
@@ -49,7 +49,7 @@ void Graph::createWegMatrix(int out_matrix[15][15])
 
 	for (int i = 0; i < Knoten; i++)
 		for (int j = 0; j < Knoten; j++)
-			potenz_temp_matrix[i][j] = out_matrix[i][j];
+			potenz_temp_matrix[i][j] = in_matrix[i][j];
 
 	for (int k = 1; k < Knoten; k++)
 	{
@@ -57,14 +57,16 @@ void Graph::createWegMatrix(int out_matrix[15][15])
 		for (int i = 0; i < Knoten; i++)
 			for (int j = 0; j < Knoten; j++)
 				if (potenzierte_matrix[i][j] != 0)
-					out_matrix[i][j] = 1;
+					in_matrix[i][j] = 1;
 	}
 
+	//für den output am anfang relevant
 	for (int i = 0; i < Knoten; i++)
 		for (int j = 0; j < Knoten; j++)
-			WegMatrix[i][j] = out_matrix[i][j];
-}
+			WegMatrix[i][j] = in_matrix[i][j];
 
+	out_matrix = in_matrix;
+}
 
 //potenziere matrix mit parameter n als exponent
 void Graph::matrixPower(int in_matrix[15][15], int out_matrix[15][15], int n)
@@ -91,10 +93,10 @@ void Graph::matrixPower(int in_matrix[15][15], int out_matrix[15][15], int n)
 	}
 }
 
-int Graph::calcKomponenten(int wegmatrix[15][15])
+void Graph::calcKomponenten(int wegmatrix[15][15], int out_anzahl)
 {
 	//speichere 2d array wegmatrix in einem 1d array
-	int temp_matrix[100];
+	int temp_matrix[100] = { 0 };
 	int m_data = 0;
 	for (int i = 0; i < Knoten; i++)
 		for (int j = 0; j < Knoten; j++)
@@ -124,7 +126,8 @@ int Graph::calcKomponenten(int wegmatrix[15][15])
 	}
 
 	//return KomponentenAnzahl = KomponentenSet.size();
-	return KompSetIntAnzahl = KompSetInt.size();
+	out_anzahl = KompSetInt.size();
+	KompSetIntAnzahl = KompSetInt.size();
 }
 
 void Graph::matrixAdd(int add_matrix[15][15], int out_matrix[15][15])
