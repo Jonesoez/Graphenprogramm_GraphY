@@ -89,13 +89,8 @@ void Graph::matrixPower(int in_matrix[15][15], int out_matrix[15][15], int n)
 	}
 }
 
-void Graph::calcKomponenten()
+void Graph::calcKomponenten(int temp_matrix[100])
 {
-	//working right now
-
-	int temp_matrix[100];
-
-
 	//speichere 2d array wegmatrix in einem 1d array
 	int m_data = 0;
 	for (int i = 0; i < Knoten; i++)

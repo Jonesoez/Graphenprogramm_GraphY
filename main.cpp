@@ -179,11 +179,10 @@ int main()
 		
 		std::cout << "\n\n";
 
-		G.calcKomponenten();
+		G.calcKomponenten(G.MatrixInLines);
 		std::cout << "Anzahl der Komponenten: ";
 		std::cout << G.KomponentenAnzahl << std::endl;
 		OutputFile << "Anzahl der Komponenten: " << G.KomponentenAnzahl << std::endl;
-
 
 		/* 
 		std::cout << "\n\n\Komponenten Zeilen: \n";
@@ -195,11 +194,15 @@ int main()
 		std::cout << "Anzahl der Komponenten (vector): ";
 		std::cout << G.KompSetIntAnzahl << std::endl;
 
-		std::cout << "Komponenten (vector): ";
+		std::cout << "Komponenten (vector): \n";
 		for (auto& elements : G.KompSetInt)
 		{
-			std::cout << elements;
+			std::cout << elements << std::endl;
 		}
+
+		std::cout << "Artikulation: ";
+		std::cout << G.Artikulation[0] << std::endl;
+
 
 		std::cout << "\n\nOutput file saved as " << outputfilename << std::endl;
 		std::cout << "\n\n\n\n\n";

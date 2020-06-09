@@ -6,3 +6,10 @@
 /Release
 /x64/Debug
 /x64/Release
+GraphenProgramm_GraphY.vcxproj.filters
+GraphenProgramm_GraphY.vcxproj.user
+GraphenProgramm_GraphY.aps
+GraphenProgramm_GraphY.rc
+.vs/
+icon1.ico
+resource.h

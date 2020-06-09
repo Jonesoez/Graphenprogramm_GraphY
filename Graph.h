@@ -14,7 +14,6 @@ class Graph
 		int MatrixSize;
 		int DistanzMatrix[15][15];
 		int WegMatrix[15][15];
-
 		
 		//Eigenschaften
 		int Exzentrizitaeten[100];
@@ -26,6 +25,10 @@ class Graph
 		std::unordered_set<std::string> KomponentenSet;
 		std::vector<std::vector<int>> matrixv;
 
+
+		//Artikulation und Brücken
+		int Artikulation[100];
+
 		//vectorsssss for tests
 		std::vector<int> Komponenten[100];
 		std::unordered_set<int> KompSetInt;
@@ -36,11 +39,13 @@ class Graph
 	public:
 		void creatDistanzMatrix();
 		void createWegMatrix();
-		void calcKomponenten();
+		void createWegMatrix_new();
+		void calcKomponenten(int temp_matrix[100]);
 		void calcExzentrizitaet(); //noch nicht fertig
 		void calcDurchmesser();
 		void calcRadius();
 		void calcZentren();
+		void calcArtikulation();
 
 		bool checkInfinity(int value);
 		void matrixPower(int in_matrix[15][15], int out_matrix[15][15], int n);
