@@ -162,7 +162,7 @@ int main()
 		OutputFile << "]" << std::endl;
 
 
-		G.createWegMatrix();
+		G.createWegMatrix(G.Matrix);
 		std::cout << "Wegmatrix: \n";
 		OutputFile << "\nWegmatrix: \n";
 		for (int i = 0; i < G.getGraphDimension(); i++)
@@ -179,10 +179,10 @@ int main()
 		
 		std::cout << "\n\n";
 
-		G.calcKomponenten(G.MatrixInLines);
-		std::cout << "Anzahl der Komponenten: ";
-		std::cout << G.KomponentenAnzahl << std::endl;
-		OutputFile << "Anzahl der Komponenten: " << G.KomponentenAnzahl << std::endl;
+		G.calcKomponenten(G.WegMatrix);
+		//std::cout << "Anzahl der Komponenten: ";
+		//std::cout << G.KomponentenAnzahl << std::endl;
+		//OutputFile << "Anzahl der Komponenten: " << G.KomponentenAnzahl << std::endl;
 
 		/* 
 		std::cout << "\n\n\Komponenten Zeilen: \n";
@@ -193,6 +193,7 @@ int main()
 
 		std::cout << "Anzahl der Komponenten (vector): ";
 		std::cout << G.KompSetIntAnzahl << std::endl;
+		OutputFile << "Anzahl der Komponenten (vector): " << G.KompSetIntAnzahl << std::endl;
 
 		std::cout << "Komponenten (vector): \n";
 		for (auto& elements : G.KompSetInt)

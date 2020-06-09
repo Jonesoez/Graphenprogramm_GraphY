@@ -38,9 +38,8 @@ class Graph
 	//Graph Funktionen
 	public:
 		void creatDistanzMatrix();
-		void createWegMatrix();
-		void createWegMatrix_new();
-		void calcKomponenten(int temp_matrix[100]);
+		void createWegMatrix(int out_matrix[15][15]);
+		int calcKomponenten(int wegmatrix[15][15]);
 		void calcExzentrizitaet(); //noch nicht fertig
 		void calcDurchmesser();
 		void calcRadius();

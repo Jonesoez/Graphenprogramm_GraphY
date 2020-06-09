@@ -34,15 +34,14 @@ void Graph::creatDistanzMatrix()
 }
 
 
-void Graph::createWegMatrix()
+void Graph::createWegMatrix(int out_matrix[15][15])
 {
 	//init wegmatrix
 	for (int i = 0; i < Knoten; i++)
 		for (int j = 0; j < Knoten; j++)
 		{
-			WegMatrix[i][j] = Matrix[i][j];;
 			if (i == j)
-				WegMatrix[i][j] = 1;
+				out_matrix[i][j] = 1;
 		}
 
 	int potenz_temp_matrix[15][15];
@@ -50,8 +49,7 @@ void Graph::createWegMatrix()
 
 	for (int i = 0; i < Knoten; i++)
 		for (int j = 0; j < Knoten; j++)
-			potenz_temp_matrix[i][j] = Matrix[i][j];
-
+			potenz_temp_matrix[i][j] = out_matrix[i][j];
 
 	for (int k = 1; k < Knoten; k++)
 	{
@@ -59,8 +57,12 @@ void Graph::createWegMatrix()
 		for (int i = 0; i < Knoten; i++)
 			for (int j = 0; j < Knoten; j++)
 				if (potenzierte_matrix[i][j] != 0)
-					WegMatrix[i][j] = 1;
+					out_matrix[i][j] = 1;
 	}
+
+	for (int i = 0; i < Knoten; i++)
+		for (int j = 0; j < Knoten; j++)
+			WegMatrix[i][j] = out_matrix[i][j];
 }
 
 
@@ -89,13 +91,15 @@ void Graph::matrixPower(int in_matrix[15][15], int out_matrix[15][15], int n)
 	}
 }
 
-void Graph::calcKomponenten(int temp_matrix[100])
+int Graph::calcKomponenten(int wegmatrix[15][15])
 {
 	//speichere 2d array wegmatrix in einem 1d array
+	int temp_matrix[100];
 	int m_data = 0;
 	for (int i = 0; i < Knoten; i++)
 		for (int j = 0; j < Knoten; j++)
-			temp_matrix[m_data++] = WegMatrix[i][j];
+			temp_matrix[m_data++] = wegmatrix[i][j];
+
 
 	int zeile = 0;
 	int spalte = 0;
@@ -119,8 +123,8 @@ void Graph::calcKomponenten(int temp_matrix[100])
 		KompSetInt.emplace(std::stoi(KomponentenZeilen[i]));
 	}
 
-	KomponentenAnzahl = KomponentenSet.size();
-	KompSetIntAnzahl = KompSetInt.size();
+	//return KomponentenAnzahl = KomponentenSet.size();
+	return KompSetIntAnzahl = KompSetInt.size();
 }
 
 void Graph::matrixAdd(int add_matrix[15][15], int out_matrix[15][15])
@@ -181,6 +185,19 @@ void Graph::calcZentren()
 	}
 }
 
+
+void Graph::calcArtikulation()
+{
+	int temp_matrix[15][15];
+	for (int i = 0; i < Knoten; i++)
+		for (int j = 0; j < Knoten; j++)
+			temp_matrix[i][j] = Matrix[i][j];
+
+	int akt_KomponentenAnzahl = KomponentenAnzahl;
+	int rm_knoten = 0;
+
+
+}
 bool Graph::checkInfinity(int value)
 {
 	if (value == INT_MAX)
