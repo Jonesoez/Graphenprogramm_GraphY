@@ -14,7 +14,8 @@ class Graph
 		int MatrixSize;
 		int DistanzMatrix[15][15];
 		int WegMatrix[15][15];
-		
+
+
 		//Eigenschaften
 		int Exzentrizitaeten[100];
 		int Durchmesser, Radius;
@@ -28,6 +29,8 @@ class Graph
 
 		//Artikulation und Brücken
 		int Artikulation[100];
+		int TempWegMatrix[15][15];
+		int CopyAdjMatrix[15][15];
 
 		//vectorsssss for tests
 		std::vector<int> Komponenten[100];
@@ -49,6 +52,7 @@ class Graph
 		bool checkInfinity(int value);
 		void matrixPower(int in_matrix[15][15], int out_matrix[15][15], int n);
 		void matrixAdd(int add_matrix[15][15], int out_matrix[15][15]);
+		void setMatrix(int in_matrix[15][15], int out_matrix[15][15]);
 		int	getGraphDimension() { return (int)sqrt(MatrixSize); };	//Durch die Wurzel der Länge der Adjazenzmatrix in der CSV Datei erhält man die Zeilen und Spalten für den 2D Array.
 
 };

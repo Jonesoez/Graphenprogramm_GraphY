@@ -201,8 +201,23 @@ int main()
 			std::cout << elements << std::endl;
 		}
 
+		G.calcArtikulation();
 		std::cout << "Artikulation: ";
-		std::cout << G.Artikulation[0] << std::endl;
+		for(int i = 0; i < G.getGraphDimension(); i++)
+			std::cout << G.Artikulation[i] << std::endl;
+
+
+		std::cout << "Temp Wegmatrix: \n";
+		for (int i = 0; i < G.getGraphDimension(); i++)
+		{
+			for (int j = 0; j < G.getGraphDimension(); j++)
+			{
+				std::cout << G.TempWegMatrix[i][j] << " ";
+			}
+			std::cout << std::endl;
+		}
+			
+
 
 
 		std::cout << "\n\nOutput file saved as " << outputfilename << std::endl;
