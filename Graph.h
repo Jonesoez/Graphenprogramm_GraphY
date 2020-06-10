@@ -21,39 +21,38 @@ class Graph
 		int Durchmesser, Radius;
 		int Zentren[100];
 
+		//Komponenten aus der main Adjazenzmatrix
 		int KomponentenAnzahl;
-		std::string KomponentenZeilen[100];
-		std::unordered_set<std::string> KomponentenSet;
-		std::vector<std::vector<int>> matrixv;
 
+		//std::unordered_set<int> KompSetInt;
+		std::unordered_set<std::string> KomponentenSet;
 
 		//Artikulation und Brücken
 		int Artikulation[100];
 		int TempWegMatrix[15][15];
 		int CopyAdjMatrix[15][15];
 
-		//vectorsssss for tests
-		std::vector<int> Komponenten[100];
-		std::unordered_set<int> KompSetInt;
-		int KompSetIntAnzahl;
 
 
 	//Graph Funktionen
 	public:
 		void creatDistanzMatrix();
-		void createWegMatrix(int in_matrix[15][15], int out_matrix[15][15]);
-		void calcKomponenten(int wegmatrix[15][15], int out_matrix);
+		void createWegMatrix(int in_matrix[15][15], int out_matrix[15][15], int knoten);
+		void calcKomponenten(int wegmatrix[15][15], int out_anzahl, int knoten);
 		void calcExzentrizitaet(); //noch nicht fertig
 		void calcDurchmesser();
 		void calcRadius();
 		void calcZentren();
 		void calcArtikulation();
 
+		void initCalc();
+
 		bool checkInfinity(int value);
 		void matrixPower(int in_matrix[15][15], int out_matrix[15][15], int n);
 		void matrixAdd(int add_matrix[15][15], int out_matrix[15][15]);
-		void setMatrix(int in_matrix[15][15], int out_matrix[15][15]);
+		void setAdjMatrix(int out_matrix[15][15], int knoten);
+		void setKomponenten(int value);
 		int	getGraphDimension() { return (int)sqrt(MatrixSize); };	//Durch die Wurzel der Länge der Adjazenzmatrix in der CSV Datei erhält man die Zeilen und Spalten für den 2D Array.
-
+		int getKomponenten() { return KomponentenSet.size(); };
 };
 

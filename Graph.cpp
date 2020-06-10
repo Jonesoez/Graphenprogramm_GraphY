@@ -34,15 +34,11 @@ void Graph::creatDistanzMatrix()
 }
 
 
-void Graph::createWegMatrix(int in_matrix[15][15], int out_matrix[15][15])
+void Graph::createWegMatrix(int in_matrix[15][15], int out_matrix[15][15], int knoten)
 {
-	for (int i = 0; i < Knoten; i++)
-		for (int j = 0; j < Knoten; j++)
-			CopyAdjMatrix[i][j] = Matrix[i][j];
-
 	//init wegmatrix
-	for (int i = 0; i < Knoten; i++)
-		for (int j = 0; j < Knoten; j++)
+	for (int i = 0; i < knoten; i++)
+		for (int j = 0; j < knoten; j++)
 		{
 			if (i == j)
 				in_matrix[i][j] = 1;
@@ -51,27 +47,22 @@ void Graph::createWegMatrix(int in_matrix[15][15], int out_matrix[15][15])
 	int potenz_temp_matrix[15][15];
 	int potenzierte_matrix[15][15];
 
-	for (int i = 0; i < Knoten; i++)
-		for (int j = 0; j < Knoten; j++)
+	for (int i = 0; i < knoten; i++)
+		for (int j = 0; j < knoten; j++)
 			potenz_temp_matrix[i][j] = in_matrix[i][j];
 
 	for (int k = 1; k < Knoten; k++)
 	{
 		matrixPower(potenz_temp_matrix, potenzierte_matrix, k);
-		for (int i = 0; i < Knoten; i++)
-			for (int j = 0; j < Knoten; j++)
+		for (int i = 0; i < knoten; i++)
+			for (int j = 0; j < knoten; j++)
 				if (potenzierte_matrix[i][j] != 0)
 					in_matrix[i][j] = 1;
 	}
 
-	//für den output am anfang relevant
-	for (int i = 0; i < Knoten; i++)
-		for (int j = 0; j < Knoten; j++)
-			WegMatrix[i][j] = in_matrix[i][j];
-
-	//somehow not working, gotta learn pointers man
-	out_matrix = in_matrix;
-
+	for (int i = 0; i < knoten; i++)
+		for (int j = 0; j < knoten; j++)
+			out_matrix[i][j] = in_matrix[i][j];
 }
 
 //potenziere matrix mit parameter n als exponent
@@ -99,39 +90,42 @@ void Graph::matrixPower(int in_matrix[15][15], int out_matrix[15][15], int n)
 	}
 }
 
-void Graph::calcKomponenten(int wegmatrix[15][15], int out_anzahl)
+void Graph::calcKomponenten(int wegmatrix[15][15], int out_anzahl, int knoten)
 {
 	//speichere 2d array wegmatrix in einem 1d array
 	int temp_matrix[100] = { 0 };
 	int m_data = 0;
-	for (int i = 0; i < Knoten; i++)
-		for (int j = 0; j < Knoten; j++)
+	for (int i = 0; i < knoten; i++)
+		for (int j = 0; j < knoten; j++)
 			temp_matrix[m_data++] = wegmatrix[i][j];
 
 	int zeile = 0;
 	int spalte = 0;
 
-	for (int i = 0; i < MatrixSize; i++)
+	//vectorsssss for tests
+	//std::vector<int> Komponenten[100];
+
+	std::string KomponentenZeilen[100];
+
+	for (int i = 0; i < knoten*knoten; i++)
 	{
 		KomponentenZeilen[zeile].append(std::to_string(temp_matrix[i]));
-		Komponenten[zeile].push_back(temp_matrix[i]);
+		//Komponenten[zeile].push_back(temp_matrix[i]);
 		spalte++;
 
 		//big brain
-		if (spalte % Knoten == 0)
+		if (spalte % knoten == 0)
 			zeile++;
 	}
 
 	//unordered_set speichert nur einziartiges zeug
-	for (int i = 0; i < Knoten; i++)
+	for (int i = 0; i < knoten; i++)
 	{
 		KomponentenSet.emplace(KomponentenZeilen[i]);
-		KompSetInt.emplace(std::stoi(KomponentenZeilen[i]));
+		//KompSetInt.emplace(std::stoi(KomponentenZeilen[i]));
 	}
 
-	//return KomponentenAnzahl = KomponentenSet.size();
-	out_anzahl = KompSetInt.size();
-	KompSetIntAnzahl = KompSetInt.size();
+	out_anzahl = KomponentenSet.size();
 }
 
 void Graph::matrixAdd(int add_matrix[15][15], int out_matrix[15][15])
@@ -192,9 +186,11 @@ void Graph::calcZentren()
 	}
 }
 
-void Graph::setMatrix(int in_matrix[15][15], int out_matrix[15][15])
+void Graph::setAdjMatrix(int out_matrix[15][15], int knoten)
 {
-	out_matrix = in_matrix;
+	for (int i = 0; i < knoten; i++)
+		for (int j = 0; j < knoten; j++)
+			out_matrix[i][j] = Matrix[i][j];
 }
 
 //not working yet
@@ -203,21 +199,35 @@ void Graph::calcArtikulation()
 	int copy_adj_matrix[15][15];
 	int temp_wegmatrix[15][15];
 
-	int akt_KomponentenAnzahl = KomponentenAnzahl;
+	int akt_komponentenAnzahl = KomponentenAnzahl;
 	int aft_KomponentenAnzahl = 0;
-	int rm_knoten = 0;
+	int rm_knoten = Knoten;
 
+	for (int i = 0; i < rm_knoten; i++)
+		for (int j = 0; j < rm_knoten; j++)
+			copy_adj_matrix[i][j] = Matrix[i][j];
 
+	printf("\ncopy_adj_matrix: \n");
+	for (int i = 0; i < Knoten; i++)
+	{
+		for (int j = 0; j < Knoten; j++)
+			printf("%d ", copy_adj_matrix[i][j]);
+
+		printf("\n");
+	}
+	printf("\n\n");
 
 	for (int durchlauf = 0; durchlauf < Knoten; durchlauf++)
 	{
-		for (int i = 0; i < Knoten; i++)
-			for (int j = 0; j < Knoten; j++)
-				copy_adj_matrix[i][j] = CopyAdjMatrix[i][j];
+
+		createWegMatrix(copy_adj_matrix, temp_wegmatrix, rm_knoten-durchlauf);
+		calcKomponenten(temp_wegmatrix, aft_KomponentenAnzahl, rm_knoten-durchlauf);
+
+		if (akt_komponentenAnzahl - 1> aft_KomponentenAnzahl)
+			Artikulation[durchlauf] = durchlauf+1;
+
+
 	}
-
-	createWegMatrix(CopyAdjMatrix, TempWegMatrix);
-
 }
 
 bool Graph::checkInfinity(int value)
@@ -226,4 +236,26 @@ bool Graph::checkInfinity(int value)
 		return true;
 	else
 		return false;
+}
+
+void Graph::setKomponenten(int value)
+{
+	KomponentenAnzahl = value;
+}
+
+void Graph::initCalc()
+{
+	int copy_adj_matrix[15][15];
+	setAdjMatrix(copy_adj_matrix, Knoten);
+	creatDistanzMatrix();
+
+	createWegMatrix(copy_adj_matrix, WegMatrix, Knoten);
+	calcKomponenten(WegMatrix, KomponentenAnzahl, Knoten);
+
+
+	calcExzentrizitaet();
+	calcDurchmesser();
+	calcRadius();
+	calcZentren();
+	//calcArtikulation();
 }

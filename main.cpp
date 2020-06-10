@@ -68,8 +68,9 @@ int main()
 		}
 		OutputFile << std::endl;
 
+		G.initCalc();
 
-		G.creatDistanzMatrix();
+
 		std::cout << "\nDistanzmatrix: " << std::endl;
 		OutputFile << "Distanzmatrix: \n";
 		for (int i = 0; i < G.getGraphDimension(); i++)
@@ -94,7 +95,6 @@ int main()
 		std::cout << std::endl;
 	
 
-		G.calcExzentrizitaet();
 		std::cout << "Exzentrizitäten: [ ";
 		OutputFile << "Exzentrizitäten: [ ";
 		for (int i = 0; i < G.getGraphDimension(); i++)
@@ -114,7 +114,6 @@ int main()
 		std::cout << "]" << std::endl;
 
 
-		G.calcDurchmesser();
 		if (G.checkInfinity(G.Durchmesser))
 		{
 			OutputFile << "Durchmesser: kein Durchmesser" << std::endl;
@@ -126,7 +125,7 @@ int main()
 			OutputFile << "Durchmesser: " << G.Durchmesser << std::endl;
 		}
 
-		G.calcRadius();
+
 		if (G.checkInfinity(G.Radius))
 		{
 			OutputFile << "Radius: kein Radius" << std::endl;
@@ -140,7 +139,6 @@ int main()
 
 
 
-		G.calcZentren();
 		std::cout << "Zentren: An den Knoten: [ ";
 		OutputFile << "Zentren: An den Knoten: [ ";
 		for (int i = 0; i < G.getGraphDimension(); i++)
@@ -162,7 +160,6 @@ int main()
 		OutputFile << "]" << std::endl;
 
 
-		G.createWegMatrix(G.Matrix, NULL);
 		std::cout << "Wegmatrix: \n";
 		OutputFile << "\nWegmatrix: \n";
 		for (int i = 0; i < G.getGraphDimension(); i++)
@@ -179,7 +176,7 @@ int main()
 		
 		std::cout << "\n\n";
 
-		G.calcKomponenten(G.WegMatrix, G.KompSetIntAnzahl);
+
 		//std::cout << "Anzahl der Komponenten: ";
 		//std::cout << G.KomponentenAnzahl << std::endl;
 		//OutputFile << "Anzahl der Komponenten: " << G.KomponentenAnzahl << std::endl;
@@ -191,17 +188,17 @@ int main()
 
 		*/
 
-		std::cout << "Anzahl der Komponenten (vector): ";
-		std::cout << G.KompSetIntAnzahl << std::endl;
-		OutputFile << "Anzahl der Komponenten (vector): " << G.KompSetIntAnzahl << std::endl;
+		std::cout << "Anzahl der Komponenten: ";
+		std::cout << G.getKomponenten() << std::endl;
+		OutputFile << "Anzahl der Komponenten: " << G.getKomponenten() << std::endl;
 
-		std::cout << "Komponenten (vector): \n";
-		for (auto& elements : G.KompSetInt)
+		std::cout << "Komponenten \n";
+		for (auto& elements : G.KomponentenSet)
 		{
 			std::cout << elements << std::endl;
 		}
 
-		G.calcArtikulation();
+
 		std::cout << "Artikulation: ";
 		for(int i = 0; i < G.getGraphDimension(); i++)
 			std::cout << G.Artikulation[i] << std::endl;
@@ -217,7 +214,6 @@ int main()
 			std::cout << std::endl;
 		}
 			
-
 
 
 		std::cout << "\n\nOutput file saved as " << outputfilename << std::endl;
