@@ -200,7 +200,7 @@ void Graph::calcZentren()
 	}
 }
 
-void Graph::setAdjMatrix(int out_matrix[15][15])
+void Graph::setAdjMatrix(int (&out_matrix)[15][15])
 {
 	for (int i = 0; i < Knoten; i++)
 		for (int j = 0; j < Knoten; j++)
@@ -250,6 +250,43 @@ void Graph::calcArtikulation()
 	}
 }
 
+void Graph::calcBruecken()
+{
+	int komponenten[100];
+	int copy_adj_matrix[15][15] = { 0 };
+	int temp_wegmatrix[15][15] = { 0 };
+	setAdjMatrix(copy_adj_matrix);
+
+	for (int durchlauf = 0; durchlauf < Knoten; durchlauf++)
+	{
+
+		for (int i = durchlauf+1; i < Knoten; i++)
+		{
+			if (copy_adj_matrix[durchlauf][i] == 1)
+			{
+				copy_adj_matrix[durchlauf][i] = 0;
+			}
+
+			createWegMatrix(copy_adj_matrix, temp_wegmatrix);
+			calcKomponenten(temp_wegmatrix, komponenten[durchlauf]);
+
+
+			//überprüfe ob sich die neu berechneten komponenten mit der originalen adjazenzmatrix unterscheiden Komponenten[0] -> adjazenzmatrix full
+			if (Komponenten[0] < komponenten[durchlauf] - 1)
+			{
+				//printf("Bruecken an Knoten: %d\n", durchlauf + 1, i+1);
+			}
+
+			//printf("Bruecken Komponenten RAW: %d\n", komponenten[durchlauf]);
+
+			//gelöschte kante hinzufuegen
+
+			copy_adj_matrix[durchlauf][i] = 1;
+			
+		}
+	}
+}
+
 bool Graph::checkInfinity(int value)
 {
 	if (value == INT_MAX)
@@ -258,7 +295,7 @@ bool Graph::checkInfinity(int value)
 		return false;
 }
 
-void Graph::setWegMatrix(int out_matrix[15][15])
+void Graph::setWegMatrix(int (&out_matrix)[15][15])
 {
 	for (int i = 0; i < Knoten; i++)
 		for (int j = 0; j < Knoten; j++)
@@ -283,4 +320,5 @@ void Graph::initCalc()
 	calcRadius();
 	calcZentren();
 	calcArtikulation();
+	calcBruecken();
 }

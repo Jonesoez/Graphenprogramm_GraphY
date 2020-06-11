@@ -29,10 +29,11 @@ class Graph
 
 		//Artikulation und Brücken
 		int Artikulation[100];
+		int Bruecken[15][15];
+
 		int ArtikulationenAnzahl;
 		std::unordered_set<int> Artikulationen;
-		int TempWegMatrix[15][15];
-		int CopyAdjMatrix[15][15];
+
 
 
 
@@ -46,14 +47,15 @@ class Graph
 		void calcRadius();
 		void calcZentren();
 		void calcArtikulation();
+		void calcBruecken();
 
 		void initCalc();
 		void delKnoten(int matrix[15][15], int knoten);
 
 		bool checkInfinity(int value);
 		void matrixPower(int in_matrix[15][15], int (&out_matrix)[15][15], int n);
-		void setAdjMatrix(int out_matrix[15][15]);
-		void setWegMatrix(int out_matrix[15][15]);
+		void setAdjMatrix(int (&out_matrix)[15][15]);
+		void setWegMatrix(int (&out_matrix)[15][15]);
 		void setKomponenten(int value);
 		int	getGraphDimension() { return (int)sqrt(MatrixSize); };	//Durch die Wurzel der Länge der Adjazenzmatrix in der CSV Datei erhält man die Zeilen und Spalten für den 2D Array.
 		//int getKomponenten() { return KomponentenSet.size(); };
