@@ -5,7 +5,8 @@ HTL Spengergasse Graphenprogramm für POS WIP
 - [x] 1D Matrix (ausgelesene CSV Datei) zu 2D Matrix konvertiert
 - [x] Bestimmung der Distanzen und Exzentrizitäten aller Knoten
 - [x] Radius, Durchmesser, Zentrum
-- [ ] Artikulationen, Brücken
+- [x] Artikulationen
+- [ ] Brücken
 - [x] Komponenten *(Anzahl)*
 
 ---

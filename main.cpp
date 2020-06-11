@@ -189,31 +189,34 @@ int main()
 		*/
 
 		std::cout << "Anzahl der Komponenten: ";
-		std::cout << G.getKomponenten() << std::endl;
-		OutputFile << "Anzahl der Komponenten: " << G.getKomponenten() << std::endl;
+		std::cout << G.Komponenten[0] << std::endl;
+		OutputFile << "Anzahl der Komponenten: " << G.Komponenten[0] << std::endl;
 
+
+		/*
+		//Komponenten Array
+		std::cout << "Komponenten Array: \n";
+		for (int i = 0; i < G.getGraphDimension(); i++)
+			std::cout << G.Komponenten[i] << std::endl;
+		
 		std::cout << "Komponenten \n";
 		for (auto& elements : G.KomponentenSet)
 		{
 			std::cout << elements << std::endl;
 		}
+		*/
 
+		std::cout << "Artikulationen an den Knoten: [ ";
 
-		std::cout << "Artikulation: ";
-		for(int i = 0; i < G.getGraphDimension(); i++)
-			std::cout << G.Artikulation[i] << std::endl;
-
-
-		std::cout << "Temp Wegmatrix: \n";
 		for (int i = 0; i < G.getGraphDimension(); i++)
 		{
-			for (int j = 0; j < G.getGraphDimension(); j++)
-			{
-				std::cout << G.TempWegMatrix[i][j] << " ";
-			}
-			std::cout << std::endl;
+			if (G.Artikulation[i] != 0)
+				std::cout << G.Artikulation[i] << " ";
 		}
-			
+		std::cout << "]" << std::endl << std::endl;
+
+		std::cout << "Artikulationen Anzahl: ";
+		std::cout << G.ArtikulationenAnzahl << std::endl;
 
 
 		std::cout << "\n\nOutput file saved as " << outputfilename << std::endl;
