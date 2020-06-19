@@ -250,39 +250,39 @@ void Graph::calcArtikulation()
 	}
 }
 
+//working!!
 void Graph::calcBruecken()
 {
-	int komponenten[100];
-	int copy_adj_matrix[15][15] = { 0 };
-	int temp_wegmatrix[15][15] = { 0 };
-	setAdjMatrix(copy_adj_matrix);
-
+	int komponenten[100] = {};
+	int pos = 0;
+	
 	for (int durchlauf = 0; durchlauf < Knoten; durchlauf++)
 	{
-
 		for (int i = durchlauf+1; i < Knoten; i++)
 		{
+			int copy_adj_matrix[15][15] = { 0 };
+			int temp_wegmatrix[15][15] = { 0 };
+			setAdjMatrix(copy_adj_matrix);
+
 			if (copy_adj_matrix[durchlauf][i] == 1)
 			{
 				copy_adj_matrix[durchlauf][i] = 0;
-			}
+				copy_adj_matrix[i][durchlauf] = 0;
 
-			createWegMatrix(copy_adj_matrix, temp_wegmatrix);
-			calcKomponenten(temp_wegmatrix, komponenten[durchlauf]);
+				createWegMatrix(copy_adj_matrix, temp_wegmatrix);
+				calcKomponenten(temp_wegmatrix, komponenten[pos]);
+				
 
-
-			//überprüfe ob sich die neu berechneten komponenten mit der originalen adjazenzmatrix unterscheiden Komponenten[0] -> adjazenzmatrix full
-			if (Komponenten[0] < komponenten[durchlauf] - 1)
-			{
-				//printf("Bruecken an Knoten: %d\n", durchlauf + 1, i+1);
-			}
-
-			//printf("Bruecken Komponenten RAW: %d\n", komponenten[durchlauf]);
-
-			//gelöschte kante hinzufuegen
-
-			copy_adj_matrix[durchlauf][i] = 1;
+				if (Komponenten[0] < komponenten[pos])
+				{
+					printf("BRUECKEN: %d-%d\n", durchlauf + 1, i+1);
+				}
 			
+
+				copy_adj_matrix[durchlauf][i] = 1;
+				copy_adj_matrix[i][durchlauf] = 1;
+				pos++;
+			}
 		}
 	}
 }
@@ -306,7 +306,6 @@ void Graph::initCalc()
 {
 	int copy_adj_matrix[15][15];
 	int copy_weg_matrix[15][15];
-	int komponenten;
 	setAdjMatrix(copy_adj_matrix);
 	setWegMatrix(copy_weg_matrix);
 
