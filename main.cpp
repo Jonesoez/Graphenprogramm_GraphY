@@ -24,7 +24,7 @@ int main()
 	std::ifstream GraphFile(filename);
 	std::ofstream OutputFile(outputfilename);
 
-	int m_temp[100] = { 0 };
+	int m_temp[2500] = { 0 };
 
 	if (GraphFile.is_open())
 	{
@@ -43,7 +43,8 @@ int main()
 		{
 			for (int j = 0; j < G.getGraphDimension(); j++)
 			{
-				G.Matrix[i][j] = m_temp[m_data++];
+				G.Matrix[i][j] = m_temp[m_data];
+				m_data++;
 			}
 		}
 
@@ -61,12 +62,13 @@ int main()
 			for (int j = 0; j < G.getGraphDimension(); j++)
 			{
 				std::cout << G.Matrix[i][j] << " ";
-				OutputFile << G.Matrix[i][j] << "\t";
+				OutputFile << G.Matrix[i][j] << " ";
 			}
 			std::cout << std::endl;
 			OutputFile << std::endl;
 		}
 		OutputFile << std::endl;
+
 
 		G.initCalc();
 
@@ -79,13 +81,13 @@ int main()
 			{
 				if (G.checkInfinity(G.DistanzMatrix[i][j]))
 				{
-					OutputFile << "~" << "\t";
+					OutputFile << "~" << " ";
 					std::cout << "~" << " ";
 				}
 				else
 				{
 					std::cout << G.DistanzMatrix[i][j] << " ";
-					OutputFile << G.DistanzMatrix[i][j] << "\t";
+					OutputFile << G.DistanzMatrix[i][j] << " ";
 				}
 			}
 			std::cout << std::endl;
@@ -204,25 +206,20 @@ int main()
 				std::cout << G.Artikulation[i] << " ";
 				OutputFile << G.Artikulation[i] << " ";
 			}
-			else
-			{
-				std::cout << "- ";
-				OutputFile << "- ";
-			}
 		}
-		std::cout << "]" << std::endl << std::endl;
+		std::cout << "]" << std::endl;
 		OutputFile << "]" << std::endl;
 
-		std::cout << "Artikulationen Anzahl: ";
-		std::cout << G.ArtikulationenAnzahl << std::endl;
-		OutputFile << "Artikulationen Anzahl: " << G.ArtikulationenAnzahl << std::endl;
-
-		std::cout << "Bruecken: [ ";
-		OutputFile << "Bruecken: [ ";
+		std::cout << "Bruecken zwischen Knoten: [ ";
+		OutputFile << "Bruecken zwischen Knoten: [ ";
 		for (int i = 0; i < G.getGraphDimension(); i++)
 		{
 			if (!G.Bruecken[i].empty())
+			{
 				std::cout << G.Bruecken[i];
+				OutputFile << G.Bruecken[i];
+			}
+				
 		}
 		std::cout << "]" << std::endl << std::endl;
 		OutputFile << "]" << std::endl;

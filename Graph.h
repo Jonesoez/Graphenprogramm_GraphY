@@ -7,29 +7,27 @@ class Graph
 {
 	//Graph
 	public:
+		//Allgemeines
 		int Knoten;
-		//int Kanten;
-		int Matrix[15][15]; //15x15 sollte fuer den anfang reichen, wird vielleicht noch zu einem dynamischen array geaendert fuer mehr size
-		int MatrixInLines[100];
+		int Matrix[50][50];
+		int MatrixInLines[2500];
 		int MatrixSize;
-		int DistanzMatrix[15][15];
-		int WegMatrix[15][15];
+		int DistanzMatrix[50][50];
+		int WegMatrix[50][50];
 
 
 		//Eigenschaften
-		int Exzentrizitaeten[100];
+		int Exzentrizitaeten[50];
 		int Durchmesser, Radius;
-		int Zentren[100];
+		int Zentren[50];
 
 		//Komponenten aus der main Adjazenzmatrix
-		int Komponenten[100];
-		int KompPlatz;
-
+		int Komponenten[50];
 		std::unordered_set<std::string> KomponentenSetMain;
 
 		//Artikulation und Brücken
-		int Artikulation[100];
-		std::string Bruecken[100];
+		int Artikulation[50];
+		std::string Bruecken[50];
 
 		int ArtikulationenAnzahl;
 		std::unordered_set<int> Artikulationen;
@@ -40,8 +38,8 @@ class Graph
 	//Graph Funktionen
 	public:
 		void creatDistanzMatrix();
-		void createWegMatrix(int in_matrix[15][15], int (&out_matrix)[15][15]);
-		void calcKomponenten(int wegmatrix[15][15], int &out_anzahl);
+		void createWegMatrix(int in_matrix[50][50], int (&out_matrix)[50][50]);
+		void calcKomponenten(int wegmatrix[50][50], int &out_anzahl);
 		void calcExzentrizitaet(); //noch nicht fertig
 		void calcDurchmesser();
 		void calcRadius();
@@ -52,9 +50,9 @@ class Graph
 		void initCalc();
 
 		bool checkInfinity(int value);
-		void matrixPower(int in_matrix[15][15], int (&out_matrix)[15][15], int n);
-		void setAdjMatrix(int (&out_matrix)[15][15]);
-		void setWegMatrix(int (&out_matrix)[15][15]);
+		void matrixPower(int in_matrix[50][50], int (&out_matrix)[50][50], int n);
+		void setAdjMatrix(int (&out_matrix)[50][50]);
+		void setWegMatrix(int (&out_matrix)[50][50]);
 		int	getGraphDimension() { return (int)sqrt(MatrixSize); };	//Durch die Wurzel der Länge der Adjazenzmatrix in der CSV Datei erhält man die Zeilen und Spalten für den 2D Array.
 		//int getKomponenten() { return KomponentenSet.size(); };
 };
