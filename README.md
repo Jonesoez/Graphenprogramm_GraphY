@@ -1,5 +1,5 @@
 # Graphenprogramm_GraphY WIP
-HTL Spengergasse Graphenprogramm für POS WIP
+HTL Spengergasse Graphenprogramm für POS
 
 - [x] Auslesen der CSV Datei
 - [x] 1D Matrix (ausgelesene CSV Datei) zu 2D Matrix konvertiert
@@ -11,5 +11,4 @@ HTL Spengergasse Graphenprogramm für POS WIP
 
 ---
 
-**Anmerkung zum auslesen der CSV:** Man hätte eigentlich auch Zeilenweise die Adjazenzmatrix einlesen können. Ich mache es nur komplizierter.
-
+19.06.2020 - Basis fertig geschrieben mit allen Funktionen bis auf die Knoten der Komponenten
