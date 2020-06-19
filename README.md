@@ -1,4 +1,4 @@
-# Graphenprogramm_GraphY WIP
+# Graphenprogramm_GraphY
 HTL Spengergasse Graphenprogramm für POS
 
 - [x] Auslesen der CSV Datei
