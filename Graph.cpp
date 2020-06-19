@@ -23,6 +23,7 @@ void Graph::creatDistanzMatrix()
 			temp_matrix[i][j] = Matrix[i][j];
 
 
+	//durchlaufe nach k
 	for (int k = 1; k < Knoten; k++)
 	{
 		matrixPower(temp_matrix, potenzierte_matrix, k);
@@ -36,7 +37,7 @@ void Graph::creatDistanzMatrix()
 
 void Graph::createWegMatrix(int in_matrix[15][15], int (&out_matrix)[15][15])
 {
-	//init wegmatrix
+	//init wegmatrix, diagonale mit 1en fuellen
 	for (int i = 0; i < Knoten; i++)
 		for (int j = 0; j < Knoten; j++)
 		{
@@ -60,12 +61,9 @@ void Graph::createWegMatrix(int in_matrix[15][15], int (&out_matrix)[15][15])
 					in_matrix[i][j] = 1;
 	}
 
-
 	for (int i = 0; i < Knoten; i++)
 		for (int j = 0; j < Knoten; j++)
 			out_matrix[i][j] = in_matrix[i][j];
-
-
 }
 
 //potenziere matrix mit parameter n als exponent
@@ -93,14 +91,8 @@ void Graph::matrixPower(int in_matrix[15][15], int (&out_matrix)[15][15], int n)
 	}
 }
 
-void Graph::setKomponenten(int value)
-{
-	Komponenten[0] = value;
-}
-
 void Graph::calcKomponenten(int wegmatrix[15][15], int &out_anzahl)
 {
-
 	//speichere 2d array wegmatrix in einem 1d array
 	int temp_matrix[100] = { 0 };
 	int m_data = 0;
@@ -146,6 +138,8 @@ void Graph::calcKomponenten(int wegmatrix[15][15], int &out_anzahl)
 
 	int size = KomponentenSet.size();
 	out_anzahl = size;
+
+	
 }
 
 
@@ -207,12 +201,6 @@ void Graph::setAdjMatrix(int (&out_matrix)[15][15])
 			out_matrix[i][j] = Matrix[i][j];
 }
 
-void Graph::delKnoten(int matrix[15][15], int knoten)
-{
-	for (int i = knoten; i < Knoten; i++)
-		for (int j = knoten; j < Knoten; j++)
-			matrix[i][j] = 0;
-}
 
 //working yet
 void Graph::calcArtikulation()
@@ -266,6 +254,7 @@ void Graph::calcBruecken()
 
 			if (copy_adj_matrix[durchlauf][i] == 1)
 			{
+				//loesche kante und mit spiegelung
 				copy_adj_matrix[durchlauf][i] = 0;
 				copy_adj_matrix[i][durchlauf] = 0;
 
@@ -275,10 +264,14 @@ void Graph::calcBruecken()
 
 				if (Komponenten[0] < komponenten[pos])
 				{
-					printf("BRUECKEN: %d-%d\n", durchlauf + 1, i+1);
+					//brain
+					Bruecken[pos].append(std::to_string(durchlauf + 1));
+					Bruecken[pos].append("-");
+					Bruecken[pos].append(std::to_string(i + 1));
+					Bruecken[pos].append(" ");
 				}
 			
-
+				//setze geloeschte kante wieder zurueck
 				copy_adj_matrix[durchlauf][i] = 1;
 				copy_adj_matrix[i][durchlauf] = 1;
 				pos++;

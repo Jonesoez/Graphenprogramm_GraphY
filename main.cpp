@@ -177,17 +177,6 @@ int main()
 		std::cout << "\n\n";
 
 
-		//std::cout << "Anzahl der Komponenten: ";
-		//std::cout << G.KomponentenAnzahl << std::endl;
-		//OutputFile << "Anzahl der Komponenten: " << G.KomponentenAnzahl << std::endl;
-
-		/* 
-		std::cout << "\n\n\Komponenten Zeilen: \n";
-		for (int i = 0; i < G.getGraphDimension(); i++)
-			std::cout << G.KomponentenZeilen[i] << std::endl;
-
-		*/
-
 		std::cout << "Anzahl der Komponenten: ";
 		std::cout << G.Komponenten[0] << std::endl;
 		OutputFile << "Anzahl der Komponenten: " << G.Komponenten[0] << std::endl;
@@ -207,22 +196,42 @@ int main()
 		*/
 
 		std::cout << "Artikulationen an den Knoten: [ ";
-
+		OutputFile << "Artikulationen an den Knoten: [ ";
 		for (int i = 0; i < G.getGraphDimension(); i++)
 		{
 			if (G.Artikulation[i] != 0)
+			{
 				std::cout << G.Artikulation[i] << " ";
+				OutputFile << G.Artikulation[i] << " ";
+			}
+			else
+			{
+				std::cout << "- ";
+				OutputFile << "- ";
+			}
 		}
 		std::cout << "]" << std::endl << std::endl;
+		OutputFile << "]" << std::endl;
 
 		std::cout << "Artikulationen Anzahl: ";
 		std::cout << G.ArtikulationenAnzahl << std::endl;
+		OutputFile << "Artikulationen Anzahl: " << G.ArtikulationenAnzahl << std::endl;
+
+		std::cout << "Bruecken: [ ";
+		OutputFile << "Bruecken: [ ";
+		for (int i = 0; i < G.getGraphDimension(); i++)
+		{
+			if (!G.Bruecken[i].empty())
+				std::cout << G.Bruecken[i];
+		}
+		std::cout << "]" << std::endl << std::endl;
+		OutputFile << "]" << std::endl;
 
 
 		std::cout << "\n\nOutput file saved as " << outputfilename << std::endl;
 		std::cout << "\n\n\n\n\n";
 
-
+	
 		OutputFile.close();
 		GraphFile.close();
 	}
