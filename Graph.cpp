@@ -4,7 +4,7 @@ int infinity = INT_MAX;
 
 void Graph::creatDistanzMatrix()
 {
-	//init distance graph
+	//setze diagonale mit 0en und restliche 0en in der matrix werden mit "unendlich" gespeichert
 	for (int i = 0; i < Knoten; i++)
 		for (int j = 0; j < Knoten; j++)
 		{
@@ -18,22 +18,27 @@ void Graph::creatDistanzMatrix()
 	int temp_matrix[50][50];
 	int potenzierte_matrix[50][50];
 
+	//speichere die main matrix in einem temp array
 	for (int i = 0; i < Knoten; i++)
 		for (int j = 0; j < Knoten; j++)
 			temp_matrix[i][j] = Matrix[i][j];
 
 
-	//durchlaufe nach k
+	
+	//durchlaufe matrix nach k
 	for (int k = 1; k < Knoten; k++)
 	{
+		//aendere wert nur nach k wenn nicht 0 und unendlich ist
 		matrixPower(temp_matrix, potenzierte_matrix, k);
+
 		for (int i = 0; i < Knoten; i++)
 			for (int j = 0; j < Knoten; j++)
-				if (potenzierte_matrix[i][j] != 0 && DistanzMatrix[i][j] == infinity)
+				if (potenzierte_matrix[i][j] > 0 && DistanzMatrix[i][j] == infinity)
+				{
 					DistanzMatrix[i][j] = k;
+				}
 	}
 }
-
 
 void Graph::createWegMatrix(int in_matrix[50][50], int (&out_matrix)[50][50])
 {
@@ -52,12 +57,14 @@ void Graph::createWegMatrix(int in_matrix[50][50], int (&out_matrix)[50][50])
 		for (int j = 0; j < Knoten; j++)
 			potenz_temp_matrix[i][j] = in_matrix[i][j];
 
+
+	//durchlaufe matrix nach k
 	for (int k = 1; k < Knoten; k++)
 	{
 		matrixPower(potenz_temp_matrix, potenzierte_matrix, k);
 		for (int i = 0; i < Knoten; i++)
 			for (int j = 0; j < Knoten; j++)
-				if (potenzierte_matrix[i][j] != 0)
+				if (potenzierte_matrix[i][j] != 0) //fuelle matrix mit 1en wenn nicht 0
 					in_matrix[i][j] = 1;
 	}
 
@@ -69,13 +76,14 @@ void Graph::createWegMatrix(int in_matrix[50][50], int (&out_matrix)[50][50])
 //potenziere matrix mit parameter n als exponent
 void Graph::matrixPower(int in_matrix[50][50], int (&out_matrix)[50][50], int n)
 {
+	//setze diagonale mit 1en
 	for (int i = 0; i < Knoten; ++i)
 		for (int j = 0; j < Knoten; ++j)
 			out_matrix[i][j] = (i == j);
 
 	int temp[50][50];
 
-	for (int w = 0; w < n; w++)
+	for (int durchlauf = 0; durchlauf < n; durchlauf++)
 	{
 		for (int i = 0; i < Knoten; i++)
 			for (int j = 0; j < Knoten; j++)
@@ -104,24 +112,21 @@ void Graph::calcKomponenten(int wegmatrix[50][50], int &out_anzahl)
 		}
 			
 
+	//erstelle string set zum speichern der komponenten in einer zeile
 	std::unordered_set<std::string> KomponentenSet;
 	KomponentenSet.clear();
 
 	int zeile = 0;
 	int spalte = 0;
-
-	//vectorsssss for tests
-	//std::vector<int> Komponenten[100];
-
 	std::string KomponentenZeilen[50];
 
 	for (int i = 0; i < MatrixSize; i++)
 	{
+		//append ermoeglicht es mir die einzelnen eintraege nacheinander in einem array zu speichern
 		KomponentenZeilen[zeile].append(std::to_string(temp_matrix[i]));
-		//Komponenten[zeile].push_back(temp_matrix[i]);
 		spalte++;
 
-		//big brain
+		//wenn die eintraege die anzahl der knoten erreicht dann springe zur naechsten zeile
 		if (spalte == Knoten)
 		{
 			zeile++;
@@ -129,12 +134,9 @@ void Graph::calcKomponenten(int wegmatrix[50][50], int &out_anzahl)
 		}
 	}
 
-	//unordered_set speichert nur einziartiges zeug
+	//unordered_set -> .emplace speichert einzigartige zeilen, die size gibt mir dann die anzahl der komponenten aus
 	for (int i = 0; i < Knoten; i++)
-	{
 		KomponentenSet.emplace(KomponentenZeilen[i]);
-		//KompSetInt.emplace(std::stoi(KomponentenZeilen[i]));
-	}
 
 	int size = KomponentenSet.size();
 	out_anzahl = size;
@@ -199,16 +201,15 @@ void Graph::setAdjMatrix(int (&out_matrix)[50][50])
 			out_matrix[i][j] = Matrix[i][j];
 }
 
-
-//working yet
 void Graph::calcArtikulation()
 {
 	for (int durchlauf = 0; durchlauf < Knoten; durchlauf++)
 	{
-		int copy_adj_matrix[50][50] = { 0 };
-		int temp_wegmatrix[50][50] = { 0 };
-		setAdjMatrix(copy_adj_matrix);
+		int copy_adj_matrix[50][50] = {};
+		int temp_wegmatrix[50][50] = {};
 		int gespeicherte_zeile[2500];
+		setAdjMatrix(copy_adj_matrix);
+
 		for (int i = 0; i < Knoten; i++)
 		{
 			gespeicherte_zeile[durchlauf] = copy_adj_matrix[durchlauf][i];
@@ -218,7 +219,7 @@ void Graph::calcArtikulation()
 		createWegMatrix(copy_adj_matrix, temp_wegmatrix);
 		calcKomponenten(temp_wegmatrix, Komponenten[durchlauf + 1]);
 
-		//überprüfe ob sich die neu berechneten komponenten mit der originalen adjazenzmatrix unterscheiden Komponenten[0] -> Komponenten aus der unberuehrten main matrix
+		//ueberpruefe ob sich die neu berechneten komponenten mit der originalen adjazenzmatrix unterscheiden Komponenten[0] = Komponenten aus der unberuehrten main matrix
 		if (Komponenten[0] < Komponenten[durchlauf + 1] - 1)
 		{
 			Artikulation[durchlauf] = durchlauf + 1;
@@ -227,14 +228,10 @@ void Graph::calcArtikulation()
 
 		//geloeschten Knoten wieder hinzufügen
 		for (int i = 0; i < Knoten; i++)
-		{
 			copy_adj_matrix[durchlauf][i] = gespeicherte_zeile[i];
-
-		}
 	}
 }
 
-//working!!
 void Graph::calcBruecken()
 {
 	int komponenten[50] = {};
@@ -242,7 +239,7 @@ void Graph::calcBruecken()
 	
 	for (int durchlauf = 0; durchlauf < Knoten; durchlauf++)
 	{
-		for (int i = durchlauf+1; i < Knoten; i++)
+		for (int i = durchlauf+1; i < Knoten; i++) //durchlaufe die matrix gespiegelt
 		{
 			int copy_adj_matrix[50][50] = { 0 };
 			int temp_wegmatrix[50][50] = { 0 };
@@ -260,7 +257,6 @@ void Graph::calcBruecken()
 
 				if (Komponenten[0] < komponenten[pos])
 				{
-					//brain
 					Bruecken[pos].append(std::to_string(durchlauf + 1));
 					Bruecken[pos].append("-");
 					Bruecken[pos].append(std::to_string(i + 1));
@@ -270,9 +266,9 @@ void Graph::calcBruecken()
 				//setze geloeschte kante wieder zurueck
 				copy_adj_matrix[durchlauf][i] = 1;
 				copy_adj_matrix[i][durchlauf] = 1;
-				pos++;
 			}
 		}
+		pos++;
 	}
 }
 
@@ -297,15 +293,21 @@ void Graph::initCalc()
 	int copy_weg_matrix[50][50];
 	setAdjMatrix(copy_adj_matrix);
 	setWegMatrix(copy_weg_matrix);
+
+	//Distanz- und Wegmatrix Berechnung
 	creatDistanzMatrix();
 	createWegMatrix(copy_adj_matrix, WegMatrix);
+
+	//Komponenten
 	calcKomponenten(WegMatrix, Komponenten[0]);
 
+	//Eigenschaften
 	calcExzentrizitaet();
 	calcDurchmesser();
 	calcRadius();
 	calcZentren();
 
+	//Artikulationen und Bruecken
 	calcArtikulation();
 	calcBruecken();
 }

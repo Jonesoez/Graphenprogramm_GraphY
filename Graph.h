@@ -10,7 +10,7 @@ class Graph
 		//Allgemeines
 		int Knoten;
 		int Matrix[50][50];
-		int MatrixInLines[2500];
+		int MatrixInLines[2500];	//Gesamte Adjazenzmatrix in einem 1D Array
 		int MatrixSize;
 		int DistanzMatrix[50][50];
 		int WegMatrix[50][50];
@@ -25,7 +25,7 @@ class Graph
 		int Komponenten[50];
 		std::unordered_set<std::string> KomponentenSetMain;
 
-		//Artikulation und Brücken
+		//Artikulation und Bruecken
 		int Artikulation[50];
 		std::string Bruecken[50];
 
@@ -37,23 +37,33 @@ class Graph
 
 	//Graph Funktionen
 	public:
+		//Distanz- und Wegmatrix
 		void creatDistanzMatrix();
 		void createWegMatrix(int in_matrix[50][50], int (&out_matrix)[50][50]);
+
+		//Komponenten
 		void calcKomponenten(int wegmatrix[50][50], int &out_anzahl);
-		void calcExzentrizitaet(); //noch nicht fertig
+
+		//Eigenschaften
+		void calcExzentrizitaet();
 		void calcDurchmesser();
 		void calcRadius();
 		void calcZentren();
+
+		//Artikulationen und Bruecken
 		void calcArtikulation();
 		void calcBruecken();
 
-		void initCalc();
+		//Ruft alle Berechnungen auf
+		void initCalc(); 
 
 		bool checkInfinity(int value);
 		void matrixPower(int in_matrix[50][50], int (&out_matrix)[50][50], int n);
+
 		void setAdjMatrix(int (&out_matrix)[50][50]);
 		void setWegMatrix(int (&out_matrix)[50][50]);
-		int	getGraphDimension() { return (int)sqrt(MatrixSize); };	//Durch die Wurzel der Länge der Adjazenzmatrix in der CSV Datei erhält man die Zeilen und Spalten für den 2D Array.
-		//int getKomponenten() { return KomponentenSet.size(); };
+
+		int	getGraphDimension() { return (int)sqrt(MatrixSize); };	//Durch die Wurzel der Laenge der Adjazenzmatrix erhaelt man die Zeilen und Spalten fuer den 2D Array
+		
 };
 

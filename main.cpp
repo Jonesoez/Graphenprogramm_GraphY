@@ -6,19 +6,16 @@
 
 #include "Graph.h"
 
-
-//unicode character fuer unendlich ist \u221E
-
 Graph G;
 
 int main()
 {
-	std::cout << "GraphY v1.2\n\n";
+	std::cout << "GraphY v1.3 by Yunus Oeztuerk 4AKIF\n\n";
 	std::string CSVmatrix;
 	std::string filename;
 	std::string outputfilename = "graph_berechnet.txt";
 
-	std::cout << "Please choose your .csv file: ";
+	std::cout << "Please choose your .csv file e.g. \"graph/g1.csv\": ";
 	std::getline(std::cin, filename);
 
 	std::ifstream GraphFile(filename);
@@ -34,7 +31,6 @@ int main()
 			m_temp[G.MatrixSize] = std::stoi(CSVmatrix);
 			G.MatrixInLines[G.MatrixSize] = std::stoi(CSVmatrix);
 			G.MatrixSize++;
-			//std::cout << CSVmatrix << '\n';
 		}
 
 		//1D Matrix(Array) zu 2D Matrix(Array)
@@ -70,9 +66,10 @@ int main()
 		OutputFile << std::endl;
 
 
+		// Alle berechnungen durchfuehren
 		G.initCalc();
 
-
+		// Distanzmatrix
 		std::cout << "\nDistanzmatrix: " << std::endl;
 		OutputFile << "Distanzmatrix: \n";
 		for (int i = 0; i < G.getGraphDimension(); i++)
@@ -97,7 +94,8 @@ int main()
 		std::cout << std::endl;
 	
 
-		std::cout << "Exzentrizitäten: [ ";
+		// Exzentrizitaeten
+		std::cout << "Exzentrizitaeten: [ ";
 		OutputFile << "Exzentrizitäten: [ ";
 		for (int i = 0; i < G.getGraphDimension(); i++)
 		{
@@ -116,6 +114,7 @@ int main()
 		std::cout << "]" << std::endl;
 
 
+		// Durchmesser
 		if (G.checkInfinity(G.Durchmesser))
 		{
 			OutputFile << "Durchmesser: kein Durchmesser" << std::endl;
@@ -128,6 +127,7 @@ int main()
 		}
 
 
+		// Radius
 		if (G.checkInfinity(G.Radius))
 		{
 			OutputFile << "Radius: kein Radius" << std::endl;
@@ -140,12 +140,11 @@ int main()
 		}
 
 
-
+		// Zentren
 		std::cout << "Zentren: An den Knoten: [ ";
 		OutputFile << "Zentren: An den Knoten: [ ";
 		for (int i = 0; i < G.getGraphDimension(); i++)
 		{
-			//alle knoten zum zentrum werden
 			if (G.checkInfinity(G.Zentren[i]))
 			{
 				std::cout << "kein Zentrum ";
@@ -162,6 +161,7 @@ int main()
 		OutputFile << "]" << std::endl;
 
 
+		// Wegmatrix
 		std::cout << "Wegmatrix: \n";
 		OutputFile << "\nWegmatrix: \n";
 		for (int i = 0; i < G.getGraphDimension(); i++)
@@ -169,7 +169,7 @@ int main()
 			for (int j = 0; j < G.getGraphDimension(); j++)
 			{
 				std::cout << G.WegMatrix[i][j] << " ";
-				OutputFile << G.WegMatrix[i][j] << "\t";
+				OutputFile << G.WegMatrix[i][j] << " ";
 			}
 			std::cout << std::endl;
 			OutputFile << std::endl;
@@ -179,24 +179,13 @@ int main()
 		std::cout << "\n\n";
 
 
-		std::cout << "Anzahl der Komponenten: ";
+		// Komponenten
+		std::cout << "Komponenten: ";
 		std::cout << G.Komponenten[0] << std::endl;
-		OutputFile << "Anzahl der Komponenten: " << G.Komponenten[0] << std::endl;
+		OutputFile << "Komponenten: " << G.Komponenten[0] << std::endl;
 
 
-		/*
-		//Komponenten Array
-		std::cout << "Komponenten Array: \n";
-		for (int i = 0; i < G.getGraphDimension(); i++)
-			std::cout << G.Komponenten[i] << std::endl;
-		
-		std::cout << "Komponenten \n";
-		for (auto& elements : G.KomponentenSet)
-		{
-			std::cout << elements << std::endl;
-		}
-		*/
-
+		// Artikulationen
 		std::cout << "Artikulationen an den Knoten: [ ";
 		OutputFile << "Artikulationen an den Knoten: [ ";
 		for (int i = 0; i < G.getGraphDimension(); i++)
@@ -206,12 +195,19 @@ int main()
 				std::cout << G.Artikulation[i] << " ";
 				OutputFile << G.Artikulation[i] << " ";
 			}
+			else
+			{
+				std::cout << "~ ";
+				OutputFile << "~ ";
+			}
 		}
 		std::cout << "]" << std::endl;
 		OutputFile << "]" << std::endl;
 
+
+		// Bruecken
 		std::cout << "Bruecken zwischen Knoten: [ ";
-		OutputFile << "Bruecken zwischen Knoten: [ ";
+		OutputFile << "Brücken zwischen Knoten: [ ";
 		for (int i = 0; i < G.getGraphDimension(); i++)
 		{
 			if (!G.Bruecken[i].empty())
@@ -219,7 +215,12 @@ int main()
 				std::cout << G.Bruecken[i];
 				OutputFile << G.Bruecken[i];
 			}
-				
+			else
+			{
+				std::cout << "~ ";
+				OutputFile << "~ ";
+			}
+			
 		}
 		std::cout << "]" << std::endl << std::endl;
 		OutputFile << "]" << std::endl;
@@ -234,7 +235,7 @@ int main()
 	}
 	else
 	{
-		std::cout << "Error: Unable to open Graph file \"matrix.csv\"\n\n";
+	std::cout << "Error: Unable to open Graph file \"" << filename << "\"" << std::endl;
 	}
 
 	system("pause");
