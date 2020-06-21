@@ -11,4 +11,5 @@ HTL Spengergasse Graphenprogramm für POS
 ---
 
 19.06.2020 - Basis fertig geschrieben mit allen Funktionen bis auf die Knoten der Komponenten
+
 21.06.2020 - Code für die Abgabe vorbereitet, final release
