@@ -16,4 +16,4 @@ HTL Spengergasse Graphenprogramm für POS
 
 ---
 
-Code wird noch weiter verbessert und dynamisch gemacht um fixe größen zu vermeiden. Es gibt kein fixes release Datum, alles was jetzt noch kommt wird von mir aus reinem Hobby Interesse geschrieben.
+~~Code wird noch weiter verbessert und dynamisch gemacht um fixe größen zu vermeiden. Es gibt kein fixes release Datum, alles was jetzt noch kommt wird von mir aus reinem Hobby Interesse geschrieben.~~
